@@ -87,3 +87,11 @@ E
 gulimall-ware/pom.xml,c\1\c14df2b904f1bfa3c1fa162045531fc6503474c6
 †
 Vgulimall-ware/src/main/java/com/xunqi/gulimall/ware/controller/PurchaseController.java,0\c\0cc9758b6d1fddac9c4bb608502a4d4c631a17fc
+‹
+[gulimall-coupon/src/test/java/com/xunqi/gulimall/coupon/GulimallCouponApplicationTests.java,d\a\da45d8ac2ec8c2ce5b01eeddd398a5bb09e0fd12
+‹
+[gulimall-member/src/test/java/com/xunqi/gulimall/member/GulimallMemberApplicationTests.java,d\4\d4fe7041093820c2b2ba702f0570aa711454400b
+…
+Ugulimall-ware/src/test/java/com/xunqi/gulimall/ware/GulimallWareApplicationTests.java,e\1\e1ccbf317c56cce1b7704e23bc773dd94eca286a
+ˆ
+Xgulimall-order/src/test/java/com/xunqi/gulimall/order/GulimallOrderApplicationTests.java,2\6\26c7fb80a265f04ea1b179fb547a79d21500ba26
