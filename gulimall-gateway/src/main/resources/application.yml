@@ -11,3 +11,11 @@ spring:
           uri: https://www.qq.com
           predicates:
             - Query=uri,qq
+
+        - id: admin_route
+          uri: lb://renren-fast
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
+##前端项目,/api
