@@ -1,0 +1,5 @@
+
+Osquid:UselessImportCheck"+Remove this unused import 'java.util.Date'.(¸…¼ü
+Fsquid:S1068"*Remove this unused "attrId" private field.(Õó›îÿÿÿÿÿ
+Ksquid:S1068""/Remove this unused "attrGroupId" private field.(ÂÏ¹ˆúÿÿÿÿ
+Hsquid:S1068&",Remove this unused "attrSort" private field.(¬ØÕ‚øÿÿÿÿ

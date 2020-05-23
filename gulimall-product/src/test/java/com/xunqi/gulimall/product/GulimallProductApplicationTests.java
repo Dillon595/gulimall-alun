@@ -1,33 +1,19 @@
 package com.xunqi.gulimall.product;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.xunqi.gulimall.product.entity.BrandEntity;
-import com.xunqi.gulimall.product.service.BrandService;
-import org.junit.jupiter.api.Test;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.annotation.Resource;
-import java.util.List;
-
+@Slf4j
+@RunWith(SpringRunner.class)
 @SpringBootTest
-class GulimallProductApplicationTests {
-
-    @Resource
-    private BrandService brandService;
+public class GulimallProductApplicationTests {
 
     @Test
     void contextLoads() {
 
-        BrandEntity brandEntity = new BrandEntity();
-        // brandEntity.setName("华为");
-        // brandService.save(brandEntity);
-        // System.out.println("保存成功...");
-        // brandEntity.setBrandId(1l);
-        // brandEntity.setDescript("中国企业");
-        // brandService.updateById(brandEntity);
-
-        List<BrandEntity> brand_id = brandService.list(new QueryWrapper<BrandEntity>().eq("brand_id", 1l));
-        System.out.println(brand_id.get(0));
     }
 
 }
