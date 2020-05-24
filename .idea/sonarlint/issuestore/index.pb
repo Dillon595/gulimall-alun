@@ -115,3 +115,8 @@ j
 :renren-fast/src/main/java/io/renren/config/CorsConfig.java,f\f\ff6b775e1084ffca9b0cd58c5619301c421a1b85
 s
 Crenren-fast/src/main/java/io/renren/modules/sys/dao/SysUserDao.java,c\2\c2ba471a2c9a7eac59b093382bf5a03f27a0357c
+K
+renren-generator/.gitignore,c\6\c68542f2ae8c801e816be4ca9b7c9cc0862b7eaa
+:
+
+.gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
