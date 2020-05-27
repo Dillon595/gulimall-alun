@@ -3,6 +3,7 @@ package com.xunqi.gulimall.product;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.xunqi.gulimall.product.service.BrandService;
+import com.xunqi.gulimall.product.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +14,7 @@ import javax.annotation.Resource;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 @Slf4j
 @RunWith(SpringRunner.class)
@@ -21,6 +23,16 @@ public class GulimallProductApplicationTests {
 
     @Resource
     private BrandService brandService;
+
+    @Resource
+    private CategoryService categoryService;
+
+    @Test
+    public void testFindPath() {
+        Long[] catelogPath = categoryService.findCatelogPath(225l);
+
+        log.info("完整路径catelogPath={}", Arrays.asList(catelogPath));
+    }
 
     @Test
     public void testUpload() throws FileNotFoundException {

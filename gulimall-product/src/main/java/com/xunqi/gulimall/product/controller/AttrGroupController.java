@@ -4,6 +4,7 @@ import com.xunqi.common.utils.PageUtils;
 import com.xunqi.common.utils.R;
 import com.xunqi.gulimall.product.entity.AttrGroupEntity;
 import com.xunqi.gulimall.product.service.AttrGroupService;
+import com.xunqi.gulimall.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,9 @@ import java.util.Map;
 public class AttrGroupController {
     @Autowired
     private AttrGroupService attrGroupService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     /**
      * 列表
@@ -46,6 +50,11 @@ public class AttrGroupController {
     //@RequiresPermissions("product:attrgroup:info")
     public R info(@PathVariable("attrGroupId") Long attrGroupId){
 		AttrGroupEntity attrGroup = attrGroupService.getById(attrGroupId);
+
+        Long catelogId = attrGroup.getCatelogId();
+        Long[] path = categoryService.findCatelogPath(catelogId);
+
+        attrGroup.setCatelogPath(path);
 
         return R.ok().put("attrGroup", attrGroup);
     }
