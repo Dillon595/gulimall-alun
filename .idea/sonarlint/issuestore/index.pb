@@ -160,3 +160,11 @@ cgulimall-product/src/main/java/com/xunqi/gulimall/product/service/CategoryBrand
 [gulimall-product/src/main/java/com/xunqi/gulimall/product/dao/CategoryBrandRelationDao.java,d\5\d507853233d9442486b30d5cb39d58b43c0cebbe
 œ
 lgulimall-product/src/main/java/com/xunqi/gulimall/product/service/impl/CategoryBrandRelationServiceImpl.java,a\2\a291429659c63ac72baa5cdece15b07fe72a9d8e
+x
+Hgulimall-product/src/main/java/com/xunqi/gulimall/product/vo/AttrVo.java,1\2\129f0db4346030a10f581d95a37aba57767029bb
+|
+Lgulimall-product/src/main/java/com/xunqi/gulimall/product/vo/AttrRespVo.java,f\d\fdd7f946d415a0a0f1f7a73370c30796c68c6849
+‚
+Rgulimall-product/src/main/java/com/xunqi/gulimall/product/service/AttrService.java,5\f\5f84cf57727a44a921a74c44d2e6b2650a17e889
+‹
+[gulimall-product/src/main/java/com/xunqi/gulimall/product/service/impl/AttrServiceImpl.java,6\b\6b6af1a57eb9a2f5e76bf7535c99b4af142ca2a6

@@ -2,13 +2,17 @@ package com.xunqi.gulimall.product.controller;
 
 import com.xunqi.common.utils.PageUtils;
 import com.xunqi.common.utils.R;
+import com.xunqi.gulimall.product.entity.AttrEntity;
 import com.xunqi.gulimall.product.entity.AttrGroupEntity;
 import com.xunqi.gulimall.product.service.AttrGroupService;
+import com.xunqi.gulimall.product.service.AttrService;
 import com.xunqi.gulimall.product.service.CategoryService;
+import com.xunqi.gulimall.product.vo.AttrGroupRelationVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -28,6 +32,39 @@ public class AttrGroupController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private AttrService attrService;
+
+    /**
+     * 获取属性分组有关联的其他属性
+     * @param attrgroupId
+     * @return
+     */
+    ///product/attrgroup/{attrgroupId}/attr/relation
+    @GetMapping(value = "/{attrgroupId}/attr/relation")
+    public R attrRelation(@PathVariable("attrgroupId") Long attrgroupId) {
+
+        List<AttrEntity> entities = attrService.getRelationAttr(attrgroupId);
+
+        return R.ok().put("data",entities);
+    }
+
+    /**
+     * 获取属性分组没有关联的其他属性
+     */
+    @GetMapping(value = "/{attrgroupId}/noattr/relation")
+    public R attrNoattrRelation(@RequestParam Map<String, Object> params,
+                                @PathVariable("attrgroupId") Long attrgroupId) {
+
+        // List<AttrEntity> entities = attrService.getRelationAttr(attrgroupId);
+
+        PageUtils page = attrService.getNoRelationAttr(params,attrgroupId);
+
+        return R.ok().put("page",page);
+    }
+
+
 
     /**
      * 列表
@@ -91,5 +128,16 @@ public class AttrGroupController {
 
         return R.ok();
     }
+
+    ///product/attrgroup/attr/relation/delete
+    @PostMapping(value = "/attr/relation/delete")
+    public R deleteRelation(@RequestBody AttrGroupRelationVo[] vos) {
+
+        attrService.deleteRelation(vos);
+
+        return R.ok();
+    }
+
+
 
 }
