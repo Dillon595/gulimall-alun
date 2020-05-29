@@ -1,6 +1,7 @@
 
-Usquid:S1135;"2Complete the task associated to this TODO comment.(©±æåúÿÿÿÿ8ï„þ¥¤.
-nsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‡¿™Žùÿÿÿÿ8Œòì¤.
-Psquid:S1611-"2Remove the parentheses around the "menu" parameter(î¤ò8ª†Ž¤.
-ƒsquid:S1488E"`Immediately return this expression instead of assigning it to the temporary variable "children".(ÍÞ´‡øÿÿÿÿ8ŽÇ¶Ž¤.
-…squid:S1488+"bImmediately return this expression instead of assigning it to the temporary variable "levelMenus".(€µ’Áüÿÿÿÿ8®œ‘Ž¤.
+…squid:S14880"bImmediately return this expression instead of assigning it to the temporary variable "levelMenus".(€µ’Áüÿÿÿÿ8œ¦œÙ¥.
+ƒsquid:S1488J"`Immediately return this expression instead of assigning it to the temporary variable "children".(ÍÞ´‡øÿÿÿÿ8œ¦œÙ¥.
+Psquid:S16112"2Remove the parentheses around the "menu" parameter(î¤ò8œ¦œÙ¥.
+Usquid:S1135@"2Complete the task associated to this TODO comment.(©±æåúÿÿÿÿ8œ¦œÙ¥.
+Lsquid:S1905e")Remove this unnecessary cast to "Long[]".(€ âÐÿÿÿÿÿ8œ¦œÙ¥.
+nsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‡¿™Žùÿÿÿÿ8œ¦œÙ¥.

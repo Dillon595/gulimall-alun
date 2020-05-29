@@ -7,9 +7,12 @@ import com.xunqi.common.utils.PageUtils;
 import com.xunqi.common.utils.Query;
 import com.xunqi.gulimall.product.dao.CategoryDao;
 import com.xunqi.gulimall.product.entity.CategoryEntity;
+import com.xunqi.gulimall.product.service.CategoryBrandRelationService;
 import com.xunqi.gulimall.product.service.CategoryService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -19,6 +22,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     // @Resource
     // private CategoryDao categoryDao;
+
+    @Resource
+    private CategoryBrandRelationService categoryBrandRelationService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -93,6 +99,19 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         Collections.reverse(parentPath);
 
         return (Long[]) parentPath.toArray(new Long[parentPath.size()]);
+    }
+
+
+    /**
+     * 级联更新所有关联的数据
+     * @param category
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void updateCascade(CategoryEntity category) {
+        this.baseMapper.updateById(category);
+
+        categoryBrandRelationService.updateCategory(category.getCatId(),category.getName());
     }
 
     private List<Long> findParentPath(Long catelogId, List<Long> paths) {
