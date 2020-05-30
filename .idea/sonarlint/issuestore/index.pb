@@ -168,3 +168,9 @@ Lgulimall-product/src/main/java/com/xunqi/gulimall/product/vo/AttrRespVo.java,f
 Rgulimall-product/src/main/java/com/xunqi/gulimall/product/service/AttrService.java,5\f\5f84cf57727a44a921a74c44d2e6b2650a17e889
 ‹
 [gulimall-product/src/main/java/com/xunqi/gulimall/product/service/impl/AttrServiceImpl.java,6\b\6b6af1a57eb9a2f5e76bf7535c99b4af142ca2a6
+|
+Lgulimall-common/src/main/java/com/xunqi/common/constant/ProductConstant.java,9\5\95c599137d2f9e5e1ee5ea55943153523efe73be
+…
+Ugulimall-product/src/main/java/com/xunqi/gulimall/product/vo/AttrGroupRelationVo.java,7\9\7961598f73ca0c6421b06b1e11b1c276c1e3ae02
+œ
+lgulimall-product/src/main/java/com/xunqi/gulimall/product/service/impl/AttrAttrgroupRelationServiceImpl.java,a\7\a7bd1ff126ef0de73ec01b7b38c9714abade1457

@@ -4,6 +4,7 @@ import com.xunqi.common.utils.PageUtils;
 import com.xunqi.common.utils.R;
 import com.xunqi.gulimall.product.entity.AttrEntity;
 import com.xunqi.gulimall.product.entity.AttrGroupEntity;
+import com.xunqi.gulimall.product.service.AttrAttrgroupRelationService;
 import com.xunqi.gulimall.product.service.AttrGroupService;
 import com.xunqi.gulimall.product.service.AttrService;
 import com.xunqi.gulimall.product.service.CategoryService;
@@ -35,6 +36,19 @@ public class AttrGroupController {
 
     @Autowired
     private AttrService attrService;
+
+    @Autowired
+    private AttrAttrgroupRelationService attrAttrgroupRelationService;
+
+    ///product/attrgroup/attr/relation
+    @PostMapping(value = "/attr/relation")
+    public R addRelation(@RequestBody List<AttrGroupRelationVo> vos) {
+
+        attrAttrgroupRelationService.saveBatch(vos);
+
+        return R.ok();
+
+    }
 
     /**
      * 获取属性分组有关联的其他属性

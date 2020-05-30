@@ -67,7 +67,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 
         //2、保存关联关系
         //判断类型，如果是基本属性就设置分组id
-        if (attr.getAttrType() == ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode()) {
+        if (attr.getAttrType() == ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode() && attr.getAttrGroupId() != null) {
             AttrAttrgroupRelationEntity relationEntity = new AttrAttrgroupRelationEntity();
             relationEntity.setAttrGroupId(attr.getAttrGroupId());
             relationEntity.setAttrId(attrEntity.getAttrId());
@@ -112,7 +112,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
             if ("base".equalsIgnoreCase(attrType)) {
                 AttrAttrgroupRelationEntity relationEntity =
                         relationDao.selectOne(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_id",attrEntity.getAttrId()));
-                if (relationEntity != null) {
+                if (relationEntity != null && relationEntity.getAttrGroupId() != null) {
                     AttrGroupEntity attrGroupEntity = attrGroupDao.selectById(relationEntity.getAttrGroupId());
                     attrRespVo.setGroupName(attrGroupEntity.getAttrGroupName());
                 }
@@ -265,7 +265,9 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 
 
         //2.2）、这些分组关联的属性
-        List<AttrAttrgroupRelationEntity> groupId = relationDao.selectList(new QueryWrapper<AttrAttrgroupRelationEntity>().in("attr_group_id", collect));
+        List<AttrAttrgroupRelationEntity> groupId = relationDao.selectList
+                (new QueryWrapper<AttrAttrgroupRelationEntity>().in("attr_group_id", collect));
+
         List<Long> attrIds = groupId.stream().map((item) -> {
             return item.getAttrId();
         }).collect(Collectors.toList());
@@ -288,6 +290,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         IPage<AttrEntity> page = this.page(new Query<AttrEntity>().getPage(params), queryWrapper);
 
         PageUtils pageUtils = new PageUtils(page);
+
 
         return pageUtils;
     }
