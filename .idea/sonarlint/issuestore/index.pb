@@ -174,3 +174,7 @@ Lgulimall-common/src/main/java/com/xunqi/common/constant/ProductConstant.java,9
 Ugulimall-product/src/main/java/com/xunqi/gulimall/product/vo/AttrGroupRelationVo.java,7\9\7961598f73ca0c6421b06b1e11b1c276c1e3ae02
 œ
 lgulimall-product/src/main/java/com/xunqi/gulimall/product/service/impl/AttrAttrgroupRelationServiceImpl.java,a\7\a7bd1ff126ef0de73ec01b7b38c9714abade1457
+…
+Ugulimall-member/src/main/java/com/xunqi/gulimall/member/feign/CouponFeignService.java,6\5\65f76e65065c8f5e3213c7a980f0e3e1e51b4443
+y
+Igulimall-product/src/main/java/com/xunqi/gulimall/product/vo/BrandVo.java,2\e\2ead725004b5a580b1c53d85a586c595df106804

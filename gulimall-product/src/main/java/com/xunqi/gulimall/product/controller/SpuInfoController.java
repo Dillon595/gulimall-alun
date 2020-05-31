@@ -1,19 +1,15 @@
 package com.xunqi.gulimall.product.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.xunqi.gulimall.product.entity.SpuInfoEntity;
-import com.xunqi.gulimall.product.service.SpuInfoService;
 import com.xunqi.common.utils.PageUtils;
 import com.xunqi.common.utils.R;
+import com.xunqi.gulimall.product.entity.SpuInfoEntity;
+import com.xunqi.gulimall.product.service.SpuInfoService;
+import com.xunqi.gulimall.product.vo.SpuSaveVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.Map;
 
 
 
@@ -58,8 +54,10 @@ public class SpuInfoController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("product:spuinfo:save")
-    public R save(@RequestBody SpuInfoEntity spuInfo){
-		spuInfoService.save(spuInfo);
+    public R save(@RequestBody SpuSaveVo vo){
+		//spuInfoService.save(spuInfo);
+
+        spuInfoService.savesupInfo(vo);
 
         return R.ok();
     }
