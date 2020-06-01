@@ -11,6 +11,7 @@ import com.xunqi.gulimall.product.service.SkuInfoService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 
@@ -38,30 +39,38 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         QueryWrapper<SkuInfoEntity> queryWrapper = new QueryWrapper<>();
 
         String key = (String) params.get("key");
-        if (!StringUtils.isEmpty(key)) {
+        if (!StringUtils.isEmpty(key) && !"0".equalsIgnoreCase(key)) {
             queryWrapper.and((wrapper) -> {
                 wrapper.eq("sku_id",key).or().like("sku_name",key);
             });
         }
 
         String catelogId = (String) params.get("catelogId");
-        if (!StringUtils.isEmpty(catelogId)) {
+        if (!StringUtils.isEmpty(catelogId) && !"0".equalsIgnoreCase(catelogId)) {
             queryWrapper.eq("catalog_id",catelogId);
         }
 
         String brandId = (String) params.get("brandId");
-        if (!StringUtils.isEmpty(brandId)) {
+        if (!StringUtils.isEmpty(brandId) && !"0".equalsIgnoreCase(brandId)) {
             queryWrapper.eq("brand_id",brandId);
         }
 
         String min = (String) params.get("min");
         if (!StringUtils.isEmpty(min)) {
-            queryWrapper.eq("catalog_id",catelogId);
+            queryWrapper.ge("price",min);
         }
 
         String max = (String) params.get("max");
+
         if (!StringUtils.isEmpty(max)) {
-            queryWrapper.eq("catalog_id",catelogId);
+            try {
+                BigDecimal bigDecimal = new BigDecimal(max);
+                if (bigDecimal.compareTo(BigDecimal.ZERO) == 1) {
+                    queryWrapper.le("price",max);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         // key:
@@ -75,7 +84,7 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
                 queryWrapper
         );
 
-        return null;
+        return new PageUtils(page);
     }
 
 }
