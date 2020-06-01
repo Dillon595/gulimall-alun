@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.xunqi.common.utils.PageUtils;
 import com.xunqi.gulimall.ware.entity.PurchaseEntity;
 import com.xunqi.gulimall.ware.vo.MergeVo;
+import com.xunqi.gulimall.ware.vo.PurchaseDoneVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,5 +32,17 @@ public interface PurchaseService extends IService<PurchaseEntity> {
      * @param mergeVo
      */
     void mergePurchase(MergeVo mergeVo);
+
+    /**
+     * 领取采购单
+     * @param ids
+     */
+    void received(List<Long> ids);
+
+    /**
+     * 完成采购单
+     * @param doneVo
+     */
+    void done(PurchaseDoneVo doneVo);
 }
 
