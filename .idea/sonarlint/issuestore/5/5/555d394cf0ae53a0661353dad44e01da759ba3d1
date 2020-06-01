@@ -1,3 +1,4 @@
 
-Tsquid:S1611("1Remove the parentheses around the "obj" parameter(¿âØŞúÿÿÿÿ8„‚ÏÚ¥.
-|squid:S2293%"YReplace the type specification in this constructor call with the diamond operator ("<>").(ı¯âŒûÿÿÿÿ8ğÑÚ¥.
+|squid:S2293/"YReplace the type specification in this constructor call with the diamond operator ("<>").(ı¯âŒûÿÿÿÿ8ğÑÚ¥.
+Tsquid:S16112"1Remove the parentheses around the "obj" parameter(¿âØŞúÿÿÿÿ8„‚ÏÚ¥.
+}squid:S1488Q"_Immediately return this expression instead of assigning it to the temporary variable "collect".(‘Ü„8Õ¬†Ä¦.
