@@ -2,13 +2,16 @@ package com.xunqi.gulimall.product.controller;
 
 import com.xunqi.common.utils.PageUtils;
 import com.xunqi.common.utils.R;
+import com.xunqi.gulimall.product.entity.ProductAttrValueEntity;
 import com.xunqi.gulimall.product.service.AttrService;
+import com.xunqi.gulimall.product.service.ProductAttrValueService;
 import com.xunqi.gulimall.product.vo.AttrRespVo;
 import com.xunqi.gulimall.product.vo.AttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -26,7 +29,22 @@ public class AttrController {
     @Autowired
     private AttrService attrService;
 
-    ///product/attr/sale/list/{catelogId}
+    @Autowired
+    private ProductAttrValueService productAttrValueService;
+
+    ///product/attr/base/listforspu/{spuId}
+
+    /**
+     *  获取spu规格
+     */
+    @GetMapping("/base/listforspu/{spuId}")
+    public R baseAttrlistforspu(@PathVariable("spuId") Long spuId){
+
+        List<ProductAttrValueEntity> entities = productAttrValueService.baseAttrListforspu(spuId);
+
+        return R.ok().put("data",entities);
+    }
+
 
     /**
      * 查询规格参数信息
@@ -95,6 +113,18 @@ public class AttrController {
 
         return R.ok();
     }
+
+    ///product/attr/update/{spuId}
+    @PostMapping("/update/{spuId}")
+    //@RequiresPermissions("product:attr:update")
+    public R updateSpuAttr(@PathVariable("spuId") Long spuId,
+                           @RequestBody List<ProductAttrValueEntity> entities){
+
+        productAttrValueService.updateSpuAttr(spuId,entities);
+
+        return R.ok();
+    }
+
 
     /**
      * 删除
