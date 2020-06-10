@@ -1,7 +1,7 @@
 package com.xunqi.gulimall.coupon.dao;
 
-import com.xunqi.gulimall.coupon.entity.SeckillPromotionEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xunqi.gulimall.coupon.entity.SeckillPromotionEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -1,7 +1,7 @@
 package com.xunqi.gulimall.coupon.dao;
 
-import com.xunqi.gulimall.coupon.entity.SkuFullReductionEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xunqi.gulimall.coupon.entity.SkuFullReductionEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

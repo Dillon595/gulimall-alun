@@ -1,8 +1,5 @@
 package com.xunqi.common.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 /**
  * @Description: 错误状态码枚举
  * @Created: with IntelliJ IDEA.
@@ -24,12 +21,11 @@ import lombok.Getter;
  *
  **/
 
-@AllArgsConstructor
-@Getter
 public enum BizCodeEnum {
 
     UNKNOW_EXCEPTION(10000,"系统未知异常"),
     VAILD_EXCEPTION(10001,"参数格式校验失败"),
+    PRODUCT_UP_EXCEPTION(11000,"商品上架异常"),
 
     ;
 
@@ -37,5 +33,16 @@ public enum BizCodeEnum {
 
     private String message;
 
+    BizCodeEnum(Integer code, String message) {
+        this.code = code;
+        this.message = message;
+    }
 
+    public Integer getCode() {
+        return code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }

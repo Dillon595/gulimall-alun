@@ -1,7 +1,22 @@
 
-…squid:S14880"bImmediately return this expression instead of assigning it to the temporary variable "levelMenus".(€µ’Áüÿÿÿÿ8œ¦œÙ¥.
-Lsquid:S1905e")Remove this unnecessary cast to "Long[]".(€ âĞÿÿÿÿÿ8œ¦œÙ¥.
-ƒsquid:S1488J"`Immediately return this expression instead of assigning it to the temporary variable "children".(ÍŞ´‡øÿÿÿÿ8œ¦œÙ¥.
-nsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‡¿™ùÿÿÿÿ8œ¦œÙ¥.
-Psquid:S16112"2Remove the parentheses around the "menu" parameter(î¤ò8œ¦œÙ¥.
-Usquid:S1135@"2Complete the task associated to this TODO comment.(©±æåúÿÿÿÿ8œ¦œÙ¥.
+bsquid:S1858"A"getName" returns a string, there's no need to call "toString()".(œ¡¡úşÿÿÿÿ8À²ì©.
+Ssquid:S1135"2Complete the task associated to this TODO comment.(ÇìŠ°úÿÿÿÿ8¦Óíè©.
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ8ı‘øç©.
+fsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ãµú8ı‘øç©.
+Csquid:S1905")Remove this unnecessary cast to "Long[]".(€ âĞÿÿÿÿÿ
+T
+squid:S106"9Replace this use of System.out or System.err by a logger.(§ÆŒ8’È¿©.
+Gsquid:S1611"2Remove the parentheses around the "menu" parameter(î¤ò
+ksquid:S00100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Æä°¶8ı‘øç©.
+msquid:S1192"LDefine a constant instead of duplicating this literal "catalogJson" 3 times.(üÙ®Ñÿÿÿÿÿ8—ä¾ì©.
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‡¿™ùÿÿÿÿ
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ßˆëşÿÿÿÿ8ı‘øç©.
+Msquid:S1135"2Complete the task associated to this TODO comment.(ë‰8ÒÜĞì©.
+Y
+squid:S106"9Replace this use of System.out or System.err by a logger.(ıš»†ûÿÿÿÿ8‚İ×ì©.
+T
+squid:S106"9Replace this use of System.out or System.err by a logger.(Ûö¸«8İ—ãì©.
+Jsquid:S1068")Remove this unused "cache" private field.(Ä‰Æôüÿÿÿÿ8àˆ´ç©.
+Lsquid:S1135"2Complete the task associated to this TODO comment.(©±æåúÿÿÿÿ
+S
+squid:S106"9Replace this use of System.out or System.err by a logger.(ŒâÏR8ºÅãì©.
