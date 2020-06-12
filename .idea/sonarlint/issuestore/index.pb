@@ -139,3 +139,5 @@ _gulimall-product/src/main/java/com/xunqi/gulimall/product/service/impl/Category
 bgulimall-product/src/main/java/com/xunqi/gulimall/product/app/AttrAttrgroupRelationController.java,4\f\4f51c7f2326791eb97a666e28bd00fed2c11a9e1
 Ž
 ^gulimall-product/src/test/java/com/xunqi/gulimall/product/GulimallProductApplicationTests.java,3\b\3b682cd8c12db5a5387c17a85956de65e2071168
+†
+Vgulimall-product/src/main/java/com/xunqi/gulimall/product/config/MyRedissonConfig.java,6\3\632e9796682adbbab2c29bd4e45213885f02dd29

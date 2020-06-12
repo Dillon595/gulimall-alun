@@ -12,6 +12,11 @@ import com.xunqi.gulimall.product.entity.CategoryEntity;
 import com.xunqi.gulimall.product.service.CategoryBrandRelationService;
 import com.xunqi.gulimall.product.service.CategoryService;
 import com.xunqi.gulimall.product.vo.Catelog2Vo;
+import org.redisson.api.RLock;
+import org.redisson.api.RReadWriteLock;
+import org.redisson.api.RedissonClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -38,6 +43,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    private RedissonClient redissonClient;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -124,14 +132,30 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     @Override
     public void updateCascade(CategoryEntity category) {
 
-        this.baseMapper.updateById(category);
+        RReadWriteLock readWriteLock = redissonClient.getReadWriteLock("catalogJson-lock");
+        //创建写锁
+        RLock rLock = readWriteLock.writeLock();
 
-        categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());
+        try {
+            rLock.lock();
+            this.baseMapper.updateById(category);
+            categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            rLock.unlock();
+        }
+
+        //同时修改缓存中的数据
+        //删除缓存,等待下一次主动查询进行更新
     }
 
+
+    //每一个需要缓存的数据我们都来指定要放到那个名字的缓存。【缓存的分区(按照业务类型分)】
+    @Cacheable({"category"})      //代表当前方法的结果需要缓存，如果缓存中有，方法都不用调用，如果缓存中没有，会调用方法。最后将方法的结果放入缓存
     @Override
     public List<CategoryEntity> getLevel1Categorys() {
-
+        System.out.println("getLevel1Categorys........");
         long l = System.currentTimeMillis();
         List<CategoryEntity> categoryEntities = this.baseMapper.selectList(
                 new QueryWrapper<CategoryEntity>().eq("parent_cid", 0));
@@ -173,6 +197,46 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
         return result;
     }
+
+
+    /**
+     * 缓存里的数据如何和数据库的数据保持一致？？
+     * 缓存数据一致性
+     * 1)、双写模式
+     * 2)、失效模式
+     * @return
+     */
+
+    public Map<String, List<Catelog2Vo>> getCatalogJsonFromDbWithRedissonLock() {
+
+        //1、占分布式锁。去redis占坑
+        //（锁的粒度，越细越快:具体缓存的是某个数据，11号商品） product-11-lock
+        //RLock catalogJsonLock = redissonClient.getLock("catalogJson-lock");
+        //创建读锁
+        RReadWriteLock readWriteLock = redissonClient.getReadWriteLock("catalogJson-lock");
+
+        RLock rLock = readWriteLock.readLock();
+
+        Map<String, List<Catelog2Vo>> dataFromDb = null;
+        try {
+            rLock.lock();
+            //加锁成功...执行业务
+            dataFromDb = getDataFromDb();
+        } finally {
+            rLock.unlock();
+        }
+        //先去redis查询下保证当前的锁是自己的
+        //获取值对比，对比成功删除=原子性 lua脚本解锁
+        // String lockValue = stringRedisTemplate.opsForValue().get("lock");
+        // if (uuid.equals(lockValue)) {
+        //     //删除我自己的锁
+        //     stringRedisTemplate.delete("lock");
+        // }
+
+        return dataFromDb;
+
+    }
+
 
     /**
      * 从数据库查询并封装数据::分布式锁
