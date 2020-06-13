@@ -72,6 +72,7 @@ public class GulimallSearchApplicationTests {
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
         sourceBuilder.query(QueryBuilders.matchQuery("address", "Mill"));
 
+
         //1.2.1)按照年龄分布进行聚合
         TermsAggregationBuilder ageAgg = AggregationBuilders.terms("ageAgg").field("age").size(10);
         sourceBuilder.aggregation(ageAgg);

@@ -1,36 +1,40 @@
 
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(€’þâ8¤¯º”ª.
+fsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ãµú8’¦þ½ª.
+Msquid:S1135"2Complete the task associated to this TODO comment.(ëž‰8’¦þ½ª.
+bsquid:S1858"A"getName" returns a string, there's no need to call "toString()".(œ¡¡úþÿÿÿÿ8’¦þ½ª.
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ƒ¸¯•ýÿÿÿÿ8’¦þ½ª.
+ksquid:S00100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Æä°¶8’¦þ½ª.
+msquid:S1192"LDefine a constant instead of duplicating this literal "catalogJson" 3 times.(üÙ®Ñÿÿÿÿÿ8’¦þ½ª.
+Y
+squid:S106"9Replace this use of System.out or System.err by a logger.(ýš»†ûÿÿÿÿ8’¦þ½ª.
+Ssquid:S1135"2Complete the task associated to this TODO comment.(©±æåúÿÿÿÿ8êõ›½ª.
+Ssquid:S1135"2Complete the task associated to this TODO comment.(ÇìŠ°úÿÿÿÿ8’¦þ½ª.
+T
+squid:S106"9Replace this use of System.out or System.err by a logger.(Ûö¸«8’¦þ½ª.
+Y
+squid:S106"9Replace this use of System.out or System.err by a logger.(ýš»†ûÿÿÿÿ8’¦þ½ª.
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‡¿™Žùÿÿÿÿ8êõ›½ª.
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ƒ¸¯•ýÿÿÿÿ8’¦þ½ª.
+bsquid:S1858"A"getName" returns a string, there's no need to call "toString()".(œ¡¡úþÿÿÿÿ8’¦þ½ª.
+T
+squid:S106"9Replace this use of System.out or System.err by a logger.(§ÆŒ8’¦þ½ª.
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¸ÂË¯8’¦þ½ª.
+Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ8’¦þ½ª.
+Jsquid:S1905")Remove this unnecessary cast to "Long[]".(€ âÐÿÿÿÿÿ8êõ›½ª.
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ßˆëþÿÿÿÿ8’¦þ½ª.
 S
-squid:S106"9Replace this use of System.out or System.err by a logger.(ŒâÏR8ºÅãì©.
-Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ8åÒç°ª.
+squid:S106"9Replace this use of System.out or System.err by a logger.(ŒâÏR8’¦þ½ª.
+gsquid:S2142"FEither re-interrupt this method or rethrow the "InterruptedException".(¬Âäµýÿÿÿÿ8’¦þ½ª.
 Y
-squid:S106"9Replace this use of System.out or System.err by a logger.(ýš»†ûÿÿÿÿ8¤¯º”ª.
-T
-squid:S106"9Replace this use of System.out or System.err by a logger.(Ûö¸«8Ý—ãì©.
-fsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ãµú8¤¯º”ª.
-T
-squid:S106"9Replace this use of System.out or System.err by a logger.(§ÆŒ8’È¿©.
-Gsquid:S1611"2Remove the parentheses around the "menu" parameter(î¤ò
-bsquid:S1858"A"getName" returns a string, there's no need to call "toString()".(œ¡¡úþÿÿÿÿ8¤¯º”ª.
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ƒ¸¯•ýÿÿÿÿ8¤¯º”ª.
-Ssquid:S1135"2Complete the task associated to this TODO comment.(ÇìŠ°úÿÿÿÿ8¦Óíè©.
-Csquid:S1905")Remove this unnecessary cast to "Long[]".(€ âÐÿÿÿÿÿ
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ãéã÷8úÁâ°ª.
-esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‡¿™Žùÿÿÿÿ
+squid:S106"9Replace this use of System.out or System.err by a logger.(©Ò•ýüÿÿÿÿ8’¦þ½ª.
+Nsquid:S1611"2Remove the parentheses around the "menu" parameter(î¤ò8êõ›½ª.
+Ksquid:S5411"*Use the primitive boolean expression here.(Üø­Áøÿÿÿÿ8’¦þ½ª.
 Y
-squid:S106"9Replace this use of System.out or System.err by a logger.(öíÙïûÿÿÿÿ8Ã”ˆ³ª.
+squid:S106"9Replace this use of System.out or System.err by a logger.(à¨Šïýÿÿÿÿ8’¦þ½ª.
+Y
+squid:S106"9Replace this use of System.out or System.err by a logger.(öíÙïûÿÿÿÿ8’¦þ½ª.
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(€’þâ8’¦þ½ª.
+Dsquid:S1148"#Use a logger to log this exception.(¬Âäµýÿÿÿÿ8’¦þ½ª.
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ãéã÷8’¦þ½ª.
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(€’þâ8’¦þ½ª.
 lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ8¤¯º”ª.
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ßˆëþÿÿÿÿ8¤¯º”ª.
-msquid:S1192"LDefine a constant instead of duplicating this literal "catalogJson" 3 times.(üÙ®Ñÿÿÿÿÿ8¿¢¶ñ©.
-Ksquid:S5411"*Use the primitive boolean expression here.(Üø­Áøÿÿÿÿ8¤¯º”ª.
-Dsquid:S1148"#Use a logger to log this exception.(¬Âäµýÿÿÿÿ8¤¯º”ª.
-Y
-squid:S106"9Replace this use of System.out or System.err by a logger.(à¨Šïýÿÿÿÿ8¤¯º”ª.
-Lsquid:S1135"2Complete the task associated to this TODO comment.(©±æåúÿÿÿÿ
-Y
-squid:S106"9Replace this use of System.out or System.err by a logger.(©Ò•ýüÿÿÿÿ8¤¯º”ª.
-Msquid:S1135"2Complete the task associated to this TODO comment.(ëž‰8¤¯º”ª.
-ksquid:S00100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Æä°¶8¤¯º”ª.
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(€’þâ8¤¯º”ª.
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ƒ¸¯•ýÿÿÿÿ8¤¯º”ª.
-gsquid:S2142"FEither re-interrupt this method or rethrow the "InterruptedException".(¬Âäµýÿÿÿÿ8¤¯º”ª.
