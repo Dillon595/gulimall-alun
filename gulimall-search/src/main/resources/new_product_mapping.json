@@ -39,7 +39,7 @@
       "brandImg": {
         "type": "keyword"
       },
-      "catelogName": {
+      "catalogName": {
         "type": "keyword"
       },
       "attrs": {

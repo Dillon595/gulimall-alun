@@ -160,7 +160,7 @@ public class MallSearchServiceImpl implements MallSearchService {
         //4、当前商品涉及到的所有分类信息
         //获取到分类的聚合
         List<SearchResult.CatalogVo> catalogVos = new ArrayList<>();
-        ParsedLongTerms catalogAgg = response.getAggregations().get("catelog_agg");
+        ParsedLongTerms catalogAgg = response.getAggregations().get("catalog_agg");
         for (Terms.Bucket bucket : catalogAgg.getBuckets()) {
             SearchResult.CatalogVo catalogVo = new SearchResult.CatalogVo();
             //得到分类id
@@ -168,8 +168,8 @@ public class MallSearchServiceImpl implements MallSearchService {
             catalogVo.setCatalogId(Long.parseLong(keyAsString));
 
             //得到分类名
-            ParsedStringTerms catelogNameAgg = bucket.getAggregations().get("catelog_name_agg");
-            String catalogName = catelogNameAgg.getBuckets().get(0).getKeyAsString();
+            ParsedStringTerms catalogNameAgg = bucket.getAggregations().get("catalog_name_agg");
+            String catalogName = catalogNameAgg.getBuckets().get(0).getKeyAsString();
             catalogVo.setCatalogName(catalogName);
             catalogVos.add(catalogVo);
         }
@@ -214,7 +214,7 @@ public class MallSearchServiceImpl implements MallSearchService {
         //1.2 bool-fiter
         //1.2.1 catelogId
         if(null != param.getCatalog3Id()){
-            boolQueryBuilder.filter(QueryBuilders.termQuery("catelogId",param.getCatalog3Id()));
+            boolQueryBuilder.filter(QueryBuilders.termQuery("catalogId",param.getCatalog3Id()));
         }
 
         //1.2.2 brandId
@@ -322,12 +322,12 @@ public class MallSearchServiceImpl implements MallSearchService {
         searchSourceBuilder.aggregation(brand_agg);
 
         //2. 按照分类信息进行聚合
-        TermsAggregationBuilder catelog_agg = AggregationBuilders.terms("catelog_agg");
-        catelog_agg.field("catelogId").size(20);
+        TermsAggregationBuilder catalog_agg = AggregationBuilders.terms("catalog_agg");
+        catalog_agg.field("catalogId").size(20);
 
-        catelog_agg.subAggregation(AggregationBuilders.terms("catelog_name_agg").field("catelogName").size(1));
+        catalog_agg.subAggregation(AggregationBuilders.terms("catalog_name_agg").field("catalogName").size(1));
 
-        searchSourceBuilder.aggregation(catelog_agg);
+        searchSourceBuilder.aggregation(catalog_agg);
 
         //2. 按照属性信息进行聚合
         NestedAggregationBuilder attr_agg = AggregationBuilders.nested("attr_agg", "attrs");
@@ -343,7 +343,6 @@ public class MallSearchServiceImpl implements MallSearchService {
         log.debug("构建的DSL语句 {}",searchSourceBuilder.toString());
 
         SearchRequest searchRequest = new SearchRequest(new String[]{EsConstant.PRODUCT_INDEX},searchSourceBuilder);
-
 
         return searchRequest;
     }
