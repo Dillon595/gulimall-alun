@@ -191,3 +191,10 @@ Zgulimall-member/src/main/java/com/xunqi/gulimall/member/entity/MemberCollectSpu
 mgulimall-member/src/main/java/com/xunqi/gulimall/member/service/impl/IntegrationChangeHistoryServiceImpl.java,1\6\16d115d78d5ca5eab34403e111e59ee065e49d4a
 è
 _gulimall-search/src/main/java/com/xunqi/gulimall/search/service/impl/MallSearchServiceImpl.java,e\7\e71e5bee98ca64afe3b4dd86977a61a837f9cc7e
+:
+
+.gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
+ê
+`gulimall-product/src/main/java/com/xunqi/gulimall/product/service/impl/SpuImagesServiceImpl.java,7\9\79c71a5e8cd6172f281353d24d9bc0acab71a259
+â
+Ygulimall-ware/src/main/java/com/xunqi/gulimall/ware/service/impl/PurchaseServiceImpl.java,c\2\c2db5d2e6100e71761db35c5350c08e8cee74511

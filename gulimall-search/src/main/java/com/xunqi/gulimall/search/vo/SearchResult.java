@@ -36,6 +36,8 @@ public class SearchResult {
      */
     private Integer totalPages;
 
+    private List<Integer> pageNavs;
+
     /**
      * 当前查询到的结果，所有涉及到的品牌
      */
