@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
 @Service("productAttrValueService")
 public class ProductAttrValueServiceImpl extends ServiceImpl<ProductAttrValueDao, ProductAttrValueEntity> implements ProductAttrValueService {
 
@@ -63,7 +62,6 @@ public class ProductAttrValueServiceImpl extends ServiceImpl<ProductAttrValueDao
 
         //批量新增
         this.saveBatch(collect);
-
     }
 
 }
