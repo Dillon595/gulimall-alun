@@ -8,6 +8,11 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848
+<<<<<<< HEAD
+=======
+  thymeleaf:
+    cache: false
+>>>>>>> 72bc0255c064281d23566ef8d7c84b1a747d7842
 
 
 logging:
@@ -16,3 +21,7 @@ logging:
     root: warn
   pattern:
     console: "%d{yyyy-MM-dd} [%thread] - %msg%n"
+<<<<<<< HEAD
+=======
+
+>>>>>>> 72bc0255c064281d23566ef8d7c84b1a747d7842

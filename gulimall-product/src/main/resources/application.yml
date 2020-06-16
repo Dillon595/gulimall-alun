@@ -17,6 +17,13 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
 
+    #关闭thymeleaf缓存
+  thymeleaf:
+    cache: false
+  redis:
+    host: 192.168.77.130
+    port: 6379
+
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
 
@@ -30,4 +37,6 @@ mybatis-plus:
 
 logging:
   level:
-    com.xunqi.gulimall: debug
+    com.xunqi.gulimall: error
+
+

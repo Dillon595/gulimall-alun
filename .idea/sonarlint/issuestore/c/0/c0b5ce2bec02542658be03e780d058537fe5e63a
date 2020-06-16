@@ -1,34 +1,34 @@
 
-@squid:S1125°"(Remove the literal "true" boolean value.(¼¶ŞŞ
-usquid:S2293o"YReplace the type specification in this constructor call with the diamond operator ("<>").(²ÃÃæıÿÿÿÿ
-hsquid:CommentedOutCodeLineö"<This block of commented-out lines of code should be removed.(ñç¤Üÿÿÿÿÿ
-@squid:S4274Ÿ"(Replace this assert with a proper check.(À«œ¾
-nsquid:S00117o"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(²ÃÃæıÿÿÿÿ
-Lsquid:S1066Ñ"/Merge this if statement with the enclosing one.(„–…Œûÿÿÿÿ
-jsquid:S3776Ê"RRefactor this method to reduce its Cognitive Complexity from 50 to the 15 allowed.(‚Şÿê
-4squid:S1643ş"Use a StringBuilder instead.(ºú·
-Esquid:S4274"(Replace this assert with a proper check.( Í¨öøÿÿÿÿ
-osquid:S2293I"YReplace the type specification in this constructor call with the diamond operator ("<>").(“Ò¨Q
-nsquid:S00117t"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¥Õøÿÿÿÿ
-4squid:S1643®"Use a StringBuilder instead.(šû¯†
-usquid:S2293t"YReplace the type specification in this constructor call with the diamond operator ("<>").(¥Õøÿÿÿÿ
-qsquid:S2293ç"YReplace the type specification in this constructor call with the diamond operator ("<>").(“¿¬ö
-csquid:CommentedOutCodeLineà"<This block of commented-out lines of code should be removed.(Ò»´
-usquid:S2293H"YReplace the type specification in this constructor call with the diamond operator ("<>").(çÖÒøÿÿÿÿ
-Esquid:S4274"(Replace this assert with a proper check.(ñŸ¦‰şÿÿÿÿ
-Qsquid:S2864¬"4Iterate over the "entrySet" instead of the "keySet".(”ıİîùÿÿÿÿ
-@squid:S4274¢"(Replace this assert with a proper check.(÷Ü•º
-Lsquid:S1066Ğ"/Merge this if statement with the enclosing one.(‹îıØüÿÿÿÿ
-@squid:S4274 "(Replace this assert with a proper check.(ÆªÀ
-usquid:S2293{"YReplace the type specification in this constructor call with the diamond operator ("<>").(˜İúÔÿÿÿÿÿ
-Esquid:S4274£"(Replace this assert with a proper check.(õÓï¡øÿÿÿÿ
-?squid:S4274¤"(Replace this assert with a proper check.(‰¬f
-@squid:S4274¡"(Replace this assert with a proper check.(‚õÛ
-@squid:S1125®"(Remove the literal "true" boolean value.(¢·£Ä
-?squid:S1125¯"(Remove the literal "true" boolean value.(òİ•
-qsquid:S2293æ"YReplace the type specification in this constructor call with the diamond operator ("<>").(¯Ë½¤
-@squid:S1659ñ"(Declare "paramValue" on a separate line.(ŸÉÛÚ
-nsquid:S00117{"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜İúÔÿÿÿÿÿ
-csquid:S1192}"GDefine a constant instead of duplicating this literal "strong" 3 times.(¾ØñÑıÿÿÿÿ
-osquid:S00117Å"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(õĞá›øÿÿÿÿ
-usquid:S2293N"YReplace the type specification in this constructor call with the diamond operator ("<>").(âëÊ°ÿÿÿÿÿ
+gsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 50 to the 15 allowed.(‚Şÿê
+=squid:S4274"(Replace this assert with a proper check.(÷Ü•º
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ñç¤Üÿÿÿÿÿ
+Isquid:S1066"/Merge this if statement with the enclosing one.(„–…Œûÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ò»´
+msquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(“Ò¨Q
+=squid:S4274"(Replace this assert with a proper check.(À«œ¾
+1squid:S1643"Use a StringBuilder instead.(ºú·
+ssquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(âëÊ°ÿÿÿÿÿ
+ssquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(˜İúÔÿÿÿÿÿ
+=squid:S4274"(Replace this assert with a proper check.(‚õÛ
+Nsquid:S2864"4Iterate over the "entrySet" instead of the "keySet".(”ıİîùÿÿÿÿ
+=squid:S1659"(Declare "paramValue" on a separate line.(ŸÉÛÚ
+Bsquid:S4274"(Replace this assert with a proper check.(ñŸ¦‰şÿÿÿÿ
+ssquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(¥Õøÿÿÿÿ
+=squid:S1125"(Remove the literal "true" boolean value.(¢·£Ä
+nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(“¿¬ö
+Bsquid:S4274"(Replace this assert with a proper check.( Í¨öøÿÿÿÿ
+nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(¯Ë½¤
+ssquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(²ÃÃæıÿÿÿÿ
+lsquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(õĞá›øÿÿÿÿ
+lsquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜İúÔÿÿÿÿÿ
+1squid:S1643"Use a StringBuilder instead.(šû¯†
+Bsquid:S4274"(Replace this assert with a proper check.(õÓï¡øÿÿÿÿ
+lsquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(²ÃÃæıÿÿÿÿ
+Isquid:S1066"/Merge this if statement with the enclosing one.(‹îıØüÿÿÿÿ
+ssquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(çÖÒøÿÿÿÿ
+lsquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¥Õøÿÿÿÿ
+=squid:S1125"(Remove the literal "true" boolean value.(¼¶ŞŞ
+=squid:S4274"(Replace this assert with a proper check.(ÆªÀ
+asquid:S1192"GDefine a constant instead of duplicating this literal "strong" 3 times.(¾ØñÑıÿÿÿÿ
+<squid:S1125"(Remove the literal "true" boolean value.(òİ•
+<squid:S4274"(Replace this assert with a proper check.(‰¬f

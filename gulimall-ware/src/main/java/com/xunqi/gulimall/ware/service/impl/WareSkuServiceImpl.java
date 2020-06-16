@@ -10,6 +10,7 @@ import com.xunqi.gulimall.ware.dao.WareSkuDao;
 import com.xunqi.gulimall.ware.entity.WareSkuEntity;
 import com.xunqi.gulimall.ware.feign.ProductFeignService;
 import com.xunqi.gulimall.ware.service.WareSkuService;
+import com.xunqi.gulimall.ware.vo.SkuHasStockVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service("wareSkuService")
@@ -51,11 +53,11 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
         return new PageUtils(page);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void addStock(Long skuId, Long wareId, Integer skuNum) {
 
-        //1、判读如果害没有这个库存记录新增
+        //1、判读如果没有这个库存记录新增
         List<WareSkuEntity> wareSkuEntities = wareSkuDao.selectList(
                 new QueryWrapper<WareSkuEntity>().eq("sku_id", skuId).eq("ware_id", wareId));
 
@@ -84,6 +86,19 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
             wareSkuDao.addStock(skuId,wareId,skuNum);
         }
 
+    }
+
+    @Override
+    public List<SkuHasStockVo> getSkuHasStock(List<Long> skuIds) {
+
+        List<SkuHasStockVo> skuHasStockVos = skuIds.stream().map(item -> {
+            Long count = this.baseMapper.getSkuStock(item);
+            SkuHasStockVo skuHasStockVo = new SkuHasStockVo();
+            skuHasStockVo.setSkuId(item);
+            skuHasStockVo.setHasStock(count == null?false:count > 0);
+            return skuHasStockVo;
+        }).collect(Collectors.toList());
+        return skuHasStockVos;
     }
 
 }
