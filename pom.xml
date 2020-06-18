@@ -21,6 +21,12 @@
         <module>gulimall-ware</module>
         <module>gulimall-search</module>
         <module>renren-generator</module>
+<<<<<<< HEAD
+        <module>gulimall-common</module>
+        <module>gulimall-third-party</module>
+        <module>gulimall-search</module>
+=======
+>>>>>>> 72bc0255c064281d23566ef8d7c84b1a747d7842
     </modules>
 
 

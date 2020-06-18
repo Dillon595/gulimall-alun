@@ -1,10 +1,13 @@
 package com.xunqi.gulimall.search.config;
 
+<<<<<<< HEAD
+=======
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.context.annotation.Bean;
+>>>>>>> 72bc0255c064281d23566ef8d7c84b1a747d7842
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -17,6 +20,14 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GulimallElasticSearchConfig {
 
+<<<<<<< HEAD
+    // @Bean
+    // public RestHighLevelClient esRestClient(){
+    //     RestHighLevelClient client = new RestHighLevelClient(
+    //             RestClient.builder(new HttpHost("192.168.137.14", 9200, "http")));
+    //     return  client;
+    // }
+=======
 
     public static final RequestOptions COMMON_OPTIONS;
     static {
@@ -34,5 +45,6 @@ public class GulimallElasticSearchConfig {
                 RestClient.builder(new HttpHost("192.168.77.130", 9200, "http")));
         return  client;
     }
+>>>>>>> 72bc0255c064281d23566ef8d7c84b1a747d7842
 
 }

@@ -12,8 +12,12 @@
         <module name="gulimall-search" />
         <module name="gulimall-gateway" />
         <module name="gulimall-product" />
+<<<<<<< HEAD
+        <module name="gulimall-search" />
+=======
         <module name="gulimall-order" />
         <module name="gulimall-ware" />
+>>>>>>> 72bc0255c064281d23566ef8d7c84b1a747d7842
         <module name="renren-generator" />
         <module name="gulimall-member" />
         <module name="gulimall-common" />

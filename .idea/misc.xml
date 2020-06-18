@@ -16,7 +16,10 @@
         <option value="$PROJECT_DIR$/gulimall-order/pom.xml" />
         <option value="$PROJECT_DIR$/gulimall-product/pom.xml" />
         <option value="$PROJECT_DIR$/gulimall-third-party/pom.xml" />
+<<<<<<< HEAD
+=======
         <option value="$PROJECT_DIR$/gulimall-ware/pom.xml" />
+>>>>>>> 72bc0255c064281d23566ef8d7c84b1a747d7842
         <option value="$PROJECT_DIR$/gulimall-search/pom.xml" />
       </list>
     </option>

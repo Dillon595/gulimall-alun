@@ -47,6 +47,8 @@
             <scope>test</scope>
         </dependency>
 
+<<<<<<< HEAD
+=======
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -57,11 +59,15 @@
             <artifactId>spring-boot-devtools</artifactId>
         </dependency>
 
+<<<<<<< HEAD
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
+=======
+>>>>>>> 72bc0255c064281d23566ef8d7c84b1a747d7842
+>>>>>>> 4be9c40f9933be09a78a799f7459ff992a04ea79
     </dependencies>
 
     <dependencyManagement>
