@@ -1,7 +1,5 @@
 package com.xunqi.gulimall.search;
 
-<<<<<<< HEAD
-=======
 import com.alibaba.fastjson.JSON;
 import com.xunqi.gulimall.search.config.GulimallElasticSearchConfig;
 import lombok.Data;
@@ -26,27 +24,19 @@ import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilde
 import org.elasticsearch.search.aggregations.metrics.Avg;
 import org.elasticsearch.search.aggregations.metrics.AvgAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
->>>>>>> 72bc0255c064281d23566ef8d7c84b1a747d7842
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-<<<<<<< HEAD
-=======
 import javax.annotation.Resource;
 import java.io.IOException;
 
->>>>>>> 72bc0255c064281d23566ef8d7c84b1a747d7842
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class GulimallSearchApplicationTests {
 
-<<<<<<< HEAD
-  @Test
-  public void contextLoads() {}
-}
-=======
+
     @Resource
     private RestHighLevelClient client;
 
@@ -196,6 +186,3 @@ public class GulimallSearchApplicationTests {
 
     }
 }
-
-
->>>>>>> 72bc0255c064281d23566ef8d7c84b1a747d7842
