@@ -87,6 +87,7 @@ public class GulimallProductApplicationTests {
 
     @Test
     public void contextLoads() {
+        System.out.println(Integer.MAX_VALUE);
 
     }
 

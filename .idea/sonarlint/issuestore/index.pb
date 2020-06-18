@@ -198,3 +198,13 @@ _gulimall-search/src/main/java/com/xunqi/gulimall/search/service/impl/MallSearch
 `gulimall-product/src/main/java/com/xunqi/gulimall/product/service/impl/SpuImagesServiceImpl.java,7\9\79c71a5e8cd6172f281353d24d9bc0acab71a259
 â
 Ygulimall-ware/src/main/java/com/xunqi/gulimall/ware/service/impl/PurchaseServiceImpl.java,c\2\c2db5d2e6100e71761db35c5350c08e8cee74511
+Ñ
+Tgulimall-product/src/main/java/com/xunqi/gulimall/product/app/SkuInfoController.java,e\3\e3bf3cc8b8787f82d026ef075a2fdfe0ea31a1b7
+z
+Jgulimall-ware/src/main/java/com/xunqi/gulimall/ware/vo/PurchaseDoneVo.java,4\1\410ece8d6bc8602989ce3e833f697189a2b0e113
+y
+Igulimall-common/src/main/java/com/xunqi/common/constant/WareConstant.java,1\5\15cb931d07fdc0dd9b6b35027d508d93b24a9323
+è
+_gulimall-gateway/src/main/java/com/xunqi/gulimall/gateway/config/GulimallCorsConfiguration.java,3\6\364061e50f1e18fab6332c0504b247570ab93d06
+ë
+agulimall-product/src/main/java/com/xunqi/gulimall/product/entity/AttrAttrgroupRelationEntity.java,5\c\5cfc9a2395569aabb57b44119907345e369e7ebe
