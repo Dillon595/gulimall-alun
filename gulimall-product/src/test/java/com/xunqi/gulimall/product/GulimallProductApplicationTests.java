@@ -2,8 +2,10 @@ package com.xunqi.gulimall.product;
 
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
+import com.xunqi.gulimall.product.dao.AttrGroupDao;
 import com.xunqi.gulimall.product.service.BrandService;
 import com.xunqi.gulimall.product.service.CategoryService;
+import com.xunqi.gulimall.product.vo.SpuItemAttrGroupVo;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +21,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -37,6 +40,16 @@ public class GulimallProductApplicationTests {
 
     @Autowired
     private RedissonClient redissonClient;
+
+    @Resource
+    private AttrGroupDao attrGroupDao;
+
+
+    @Test
+    public void test() {
+        List<SpuItemAttrGroupVo> attrGroupWithAttrsBySpuId = attrGroupDao.getAttrGroupWithAttrsBySpuId(130L, 225L);
+        attrGroupWithAttrsBySpuId.forEach(System.out::println);
+    }
 
     @Test
     public void testRedisson() {

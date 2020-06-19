@@ -1,8 +1,12 @@
 package com.xunqi.gulimall.product.web;
 
+import com.xunqi.gulimall.product.service.SkuInfoService;
+import com.xunqi.gulimall.product.vo.SkuItemVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import javax.annotation.Resource;
 
 /**
  * @Description:
@@ -14,6 +18,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class ItemController {
 
+    @Resource
+    private SkuInfoService skuInfoService;
+
     /**
      * 展示当前sku的详情
      * @param skuId
@@ -23,6 +30,8 @@ public class ItemController {
     public String skuItem(@PathVariable("skuId") Long skuId){
 
         System.out.println("准备查询" + skuId + "详情");
+
+        SkuItemVo vos = skuInfoService.item(skuId);
 
         return "item";
     }
