@@ -1,19 +1,14 @@
 package com.xunqi.gulimall.member.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.xunqi.gulimall.member.entity.GrowthChangeHistoryEntity;
-import com.xunqi.gulimall.member.service.GrowthChangeHistoryService;
 import com.xunqi.common.utils.PageUtils;
 import com.xunqi.common.utils.R;
+import com.xunqi.gulimall.member.entity.GrowthChangeHistoryEntity;
+import com.xunqi.gulimall.member.service.GrowthChangeHistoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.Map;
 
 
 
@@ -49,7 +44,6 @@ public class GrowthChangeHistoryController {
     //@RequiresPermissions("member:growthchangehistory:info")
     public R info(@PathVariable("id") Long id){
 		GrowthChangeHistoryEntity growthChangeHistory = growthChangeHistoryService.getById(id);
-
         return R.ok().put("growthChangeHistory", growthChangeHistory);
     }
 

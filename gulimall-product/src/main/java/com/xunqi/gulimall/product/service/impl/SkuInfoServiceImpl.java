@@ -9,10 +9,8 @@ import com.xunqi.gulimall.product.dao.SkuInfoDao;
 import com.xunqi.gulimall.product.entity.SkuImagesEntity;
 import com.xunqi.gulimall.product.entity.SkuInfoEntity;
 import com.xunqi.gulimall.product.entity.SpuInfoDescEntity;
-import com.xunqi.gulimall.product.service.AttrGroupService;
-import com.xunqi.gulimall.product.service.SkuImagesService;
-import com.xunqi.gulimall.product.service.SkuInfoService;
-import com.xunqi.gulimall.product.service.SpuInfoDescService;
+import com.xunqi.gulimall.product.service.*;
+import com.xunqi.gulimall.product.vo.SkuItemSaleAttrVo;
 import com.xunqi.gulimall.product.vo.SkuItemVo;
 import com.xunqi.gulimall.product.vo.SpuItemAttrGroupVo;
 import org.apache.commons.lang.StringUtils;
@@ -22,6 +20,9 @@ import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ThreadPoolExecutor;
 
 
 @Service("skuInfoService")
@@ -35,6 +36,12 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
 
     @Resource
     private AttrGroupService attrGroupService;
+
+    @Resource
+    private SkuSaleAttrValueService skuSaleAttrValueService;
+
+    @Resource
+    private ThreadPoolExecutor executor;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -115,33 +122,53 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
     }
 
     @Override
-    public SkuItemVo item(Long skuId) {
+    public SkuItemVo item(Long skuId) throws ExecutionException, InterruptedException {
 
         SkuItemVo skuItemVo = new SkuItemVo();
 
-        //1、sku基本信息的获取  pms_sku_info
-        SkuInfoEntity info = this.getById(skuId);
-        skuItemVo.setInfo(info);
+        CompletableFuture<SkuInfoEntity> infoFuture = CompletableFuture.supplyAsync(() -> {
+            //1、sku基本信息的获取  pms_sku_info
+            SkuInfoEntity info = this.getById(skuId);
+            skuItemVo.setInfo(info);
+            return info;
+        }, executor);
 
-        Long spuId = info.getSpuId();
-        Long catalogId = info.getCatalogId();
+
+        CompletableFuture<Void> saleAttrFuture = infoFuture.thenAcceptAsync((res) -> {
+            //3、获取spu的销售属性组合
+            List<SkuItemSaleAttrVo> saleAttrVos = skuSaleAttrValueService.getSaleAttrBySpuId(res.getSpuId());
+            skuItemVo.setSaleAttr(saleAttrVos);
+        }, executor);
+
+
+        CompletableFuture<Void> descFuture = infoFuture.thenAcceptAsync((res) -> {
+            //4、获取spu的介绍    pms_spu_info_desc
+            SpuInfoDescEntity spuInfoDescEntity = spuInfoDescService.getById(res.getSpuId());
+            skuItemVo.setDesc(spuInfoDescEntity);
+        }, executor);
+
+
+        CompletableFuture<Void> baseAttrFuture = infoFuture.thenAcceptAsync((res) -> {
+            //5、获取spu的规格参数信息
+            List<SpuItemAttrGroupVo> attrGroupVos = attrGroupService.getAttrGroupWithAttrsBySpuId(res.getSpuId(), res.getCatalogId());
+            skuItemVo.setGroupAttrs(attrGroupVos);
+        }, executor);
+
+
+        // Long spuId = info.getSpuId();
+        // Long catalogId = info.getCatalogId();
 
         //2、sku的图片信息    pms_sku_images
-        List<SkuImagesEntity> imagesEntities = skuImagesService.getImagesBySkuId(skuId);
-        skuItemVo.setImages(imagesEntities);
+        CompletableFuture<Void> imageFuture = CompletableFuture.runAsync(() -> {
+            List<SkuImagesEntity> imagesEntities = skuImagesService.getImagesBySkuId(skuId);
+            skuItemVo.setImages(imagesEntities);
+        }, executor);
 
-        //3、获取spu的销售属性组合
 
+        //等到所有任务都完成
+        CompletableFuture.allOf(saleAttrFuture,descFuture,baseAttrFuture,imageFuture).get();
 
-        //4、获取spu的介绍    pms_spu_info_desc
-        SpuInfoDescEntity spuInfoDescEntity = spuInfoDescService.getById(spuId);
-        skuItemVo.setDesc(spuInfoDescEntity);
-
-        //5、获取spu的规格参数信息
-        List<SpuItemAttrGroupVo> attrGroupVos = attrGroupService.getAttrGroupWithAttrsBySpuId(spuId,catalogId);
-        skuItemVo.setGroupAttrs(attrGroupVos);
-
-        return null;
+        return skuItemVo;
     }
 
 }

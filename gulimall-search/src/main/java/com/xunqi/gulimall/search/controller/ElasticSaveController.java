@@ -43,7 +43,8 @@ public class ElasticSaveController {
         try {
             status = productSaveService.productStatusUp(skuEsModels);
         } catch (IOException e) {
-            log.error("商品上架错误{}",e);
+            //log.error("商品上架错误{}",e);
+
             return R.error(BizCodeEnum.PRODUCT_UP_EXCEPTION.getCode(),BizCodeEnum.PRODUCT_UP_EXCEPTION.getMessage());
         }
 

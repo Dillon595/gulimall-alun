@@ -9,6 +9,7 @@ import lombok.Data;
  * @author bejson.com (i@bejson.com)
  * @website http://www.bejson.com/java2pojo/
  */
+
 @Data
 public class Attr {
 
