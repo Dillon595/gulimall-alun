@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/gulimall.iml" filepath="$PROJECT_DIR$/gulimall.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gulimall-auth-server/gulimall-auth-server.iml" filepath="$PROJECT_DIR$/gulimall-auth-server/gulimall-auth-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/gulimall-common/gulimall-common.iml" filepath="$PROJECT_DIR$/gulimall-common/gulimall-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/gulimall-coupon/gulimall-coupon.iml" filepath="$PROJECT_DIR$/gulimall-coupon/gulimall-coupon.iml" />
       <module fileurl="file://$PROJECT_DIR$/gulimall-gateway/gulimall-gateway.iml" filepath="$PROJECT_DIR$/gulimall-gateway/gulimall-gateway.iml" />
