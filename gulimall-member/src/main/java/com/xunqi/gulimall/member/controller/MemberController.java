@@ -1,8 +1,11 @@
 package com.xunqi.gulimall.member.controller;
 
+import com.xunqi.common.exception.BizCodeEnum;
 import com.xunqi.common.utils.PageUtils;
 import com.xunqi.common.utils.R;
 import com.xunqi.gulimall.member.entity.MemberEntity;
+import com.xunqi.gulimall.member.exception.PhoneException;
+import com.xunqi.gulimall.member.exception.UsernameException;
 import com.xunqi.gulimall.member.service.MemberService;
 import com.xunqi.gulimall.member.vo.MemberUserRegisterVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +35,10 @@ public class MemberController {
 
         try {
             memberService.register(vo);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (PhoneException e) {
+            return R.error(BizCodeEnum.PHONE_EXIST_EXCEPTION.getCode(),BizCodeEnum.PHONE_EXIST_EXCEPTION.getMessage());
+        } catch (UsernameException e) {
+            return R.error(BizCodeEnum.USER_EXIST_EXCEPTION.getCode(),BizCodeEnum.USER_EXIST_EXCEPTION.getMessage());
         }
 
         return R.ok();

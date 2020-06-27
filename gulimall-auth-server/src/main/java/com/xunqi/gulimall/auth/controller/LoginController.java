@@ -1,8 +1,10 @@
 package com.xunqi.gulimall.auth.controller;
 
+import com.alibaba.fastjson.TypeReference;
 import com.xunqi.common.constant.AuthServerConstant;
 import com.xunqi.common.exception.BizCodeEnum;
 import com.xunqi.common.utils.R;
+import com.xunqi.gulimall.auth.feign.MemberFeignService;
 import com.xunqi.gulimall.auth.feign.ThirdPartFeignService;
 import com.xunqi.gulimall.auth.vo.UserRegisterVo;
 import org.apache.commons.lang.StringUtils;
@@ -35,6 +37,9 @@ public class LoginController {
 
     @Autowired
     private ThirdPartFeignService thirdPartFeignService;
+
+    @Autowired
+    private MemberFeignService memberFeignService;
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -103,7 +108,17 @@ public class LoginController {
                 //删除验证码;令牌机制
                 stringRedisTemplate.delete(AuthServerConstant.SMS_CODE_CACHE_PREFIX+vos.getPhone());
                 //验证码通过，真正注册，调用远程服务进行注册
-
+                R register = memberFeignService.register(vos);
+                if (register.getCode() == 0) {
+                    //成功
+                    return "redirect:http://auth.gulimall.com/login.html";
+                } else {
+                    //失败
+                    Map<String, String> errors = new HashMap<>();
+                    errors.put("msg", register.getData(new TypeReference<String>(){}));
+                    attributes.addFlashAttribute("errors",errors);
+                    return "redirect:http://auth.gulimall.com/reg.html";
+                }
 
 
             } else {
@@ -120,8 +135,5 @@ public class LoginController {
             attributes.addFlashAttribute("errors",errors);
             return "redirect:http://auth.gulimall.com/reg.html";
         }
-
-        //注册成功回到登录页面
-        return "redirect:/log.html";
     }
 }

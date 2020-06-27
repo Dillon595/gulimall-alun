@@ -13,6 +13,7 @@ import com.xunqi.gulimall.member.exception.PhoneException;
 import com.xunqi.gulimall.member.exception.UsernameException;
 import com.xunqi.gulimall.member.service.MemberService;
 import com.xunqi.gulimall.member.vo.MemberUserRegisterVo;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -51,14 +52,16 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
         checkUserNameUnique(vo.getUserName());
 
         memberEntity.setUsername(vo.getUserName());
-        //密码要进行加密处理
-        memberEntity.setPassword();
+        //密码进行MD5加密
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String encode = bCryptPasswordEncoder.encode(vo.getPassword());
+        memberEntity.setPassword(encode);
         memberEntity.setMobile(vo.getPhone());
         memberEntity.setGender(0);
         memberEntity.setStatus(1);
         memberEntity.setCreateTime(new Date());
 
-
+        //保存数据
         this.baseMapper.insert(memberEntity);
     }
 
