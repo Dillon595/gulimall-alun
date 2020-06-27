@@ -5,6 +5,7 @@ import com.xunqi.common.utils.PageUtils;
 import com.xunqi.gulimall.member.entity.MemberEntity;
 import com.xunqi.gulimall.member.exception.PhoneException;
 import com.xunqi.gulimall.member.exception.UsernameException;
+import com.xunqi.gulimall.member.vo.MemberUserLoginVo;
 import com.xunqi.gulimall.member.vo.MemberUserRegisterVo;
 
 import java.util.Map;
@@ -40,5 +41,11 @@ public interface MemberService extends IService<MemberEntity> {
      */
     void checkUserNameUnique(String userName) throws UsernameException;
 
+    /**
+     * 用户登录
+     * @param vo
+     * @return
+     */
+    MemberEntity login(MemberUserLoginVo vo);
 }
 

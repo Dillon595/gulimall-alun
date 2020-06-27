@@ -6,6 +6,7 @@ import com.xunqi.common.exception.BizCodeEnum;
 import com.xunqi.common.utils.R;
 import com.xunqi.gulimall.auth.feign.MemberFeignService;
 import com.xunqi.gulimall.auth.feign.ThirdPartFeignService;
+import com.xunqi.gulimall.auth.vo.UserLoginVo;
 import com.xunqi.gulimall.auth.vo.UserRegisterVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,7 +116,7 @@ public class LoginController {
                 } else {
                     //失败
                     Map<String, String> errors = new HashMap<>();
-                    errors.put("msg", register.getData(new TypeReference<String>(){}));
+                    errors.put("msg", register.getData("msg",new TypeReference<String>(){}));
                     attributes.addFlashAttribute("errors",errors);
                     return "redirect:http://auth.gulimall.com/reg.html";
                 }
@@ -136,4 +137,23 @@ public class LoginController {
             return "redirect:http://auth.gulimall.com/reg.html";
         }
     }
+
+
+    @PostMapping(value = "/login")
+    public String login(UserLoginVo vo,RedirectAttributes attributes) {
+
+        //远程登录
+        R login = memberFeignService.login(vo);
+
+        if (login.getCode() == 0) {
+            return "redirect:http://gulimall.com";
+        } else {
+            Map<String,String> errors = new HashMap<>();
+            errors.put("msg",login.getData("msg",new TypeReference<String>(){}));
+            attributes.addFlashAttribute("errors",errors);
+            return "redirect:http://auth.gulimall.com/login.html";
+        }
+
+    }
+
 }
