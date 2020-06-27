@@ -9,7 +9,13 @@ spring:
       discovery:
         server-addr: localhost:8848
 
+  redis:
+    host: 192.168.77.130
+    port: 6379
+
+
   thymeleaf:
     cache: false
+
 
 
