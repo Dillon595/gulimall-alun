@@ -1,6 +1,6 @@
 package com.xunqi.gulimall.thirdparty.component;
 
-import com.xunqi.gulimall.thirdparty.util.HttpUtils;
+import com.xunqi.common.utils.HttpUtils;
 import lombok.Data;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;

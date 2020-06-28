@@ -1,4 +1,4 @@
-package com.xunqi.gulimall.thirdparty.util;
+package com.xunqi.common.utils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpResponse;

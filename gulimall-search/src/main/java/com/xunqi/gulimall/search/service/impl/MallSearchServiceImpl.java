@@ -277,7 +277,6 @@ public class MallSearchServiceImpl implements MallSearchService {
         //1.2.3 attrs
         if(param.getAttrs() != null && param.getAttrs().size() > 0){
 
-
             param.getAttrs().forEach(item -> {
                 //attrs=1_5寸:8寸&2_16G:8G
                 BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
