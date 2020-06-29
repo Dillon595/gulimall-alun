@@ -1,8 +1,9 @@
-package com.xunqi.gulimall.auth.vo;
+package com.xunqi.common.vo;
 
 import lombok.Data;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,7 +15,9 @@ import java.util.Date;
 
 @ToString
 @Data
-public class MemberResponseVo {
+public class MemberResponseVo implements Serializable {
+
+    private static final long serialVersionUID = 5573669251256409786L;
 
     private Long id;
     /**

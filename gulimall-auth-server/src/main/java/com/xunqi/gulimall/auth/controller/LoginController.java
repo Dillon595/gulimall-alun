@@ -4,6 +4,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.xunqi.common.constant.AuthServerConstant;
 import com.xunqi.common.exception.BizCodeEnum;
 import com.xunqi.common.utils.R;
+import com.xunqi.common.vo.MemberResponseVo;
 import com.xunqi.gulimall.auth.feign.MemberFeignService;
 import com.xunqi.gulimall.auth.feign.ThirdPartFeignService;
 import com.xunqi.gulimall.auth.vo.UserLoginVo;
@@ -20,11 +21,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
+import static com.xunqi.common.constant.AuthServerConstant.LOGIN_USER;
 
 /**
  * @Description:
@@ -139,13 +143,30 @@ public class LoginController {
     }
 
 
+    @GetMapping(value = "/login.html")
+    public String loginPage(HttpSession session) {
+
+        //从session先取出来用户的信息，判断用户是否已经登录过了
+        Object attribute = session.getAttribute(LOGIN_USER);
+        //如果用户没登录那就跳转到登录页面
+        if (attribute == null) {
+            return "login";
+        } else {
+            return "redirect:http://gulimall.com";
+        }
+
+    }
+
+
     @PostMapping(value = "/login")
-    public String login(UserLoginVo vo,RedirectAttributes attributes) {
+    public String login(UserLoginVo vo, RedirectAttributes attributes, HttpSession session) {
 
         //远程登录
         R login = memberFeignService.login(vo);
 
         if (login.getCode() == 0) {
+            MemberResponseVo data = login.getData("data", new TypeReference<MemberResponseVo>() {});
+            session.setAttribute(LOGIN_USER,data);
             return "redirect:http://gulimall.com";
         } else {
             Map<String,String> errors = new HashMap<>();

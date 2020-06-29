@@ -59,6 +59,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
         checkPhoneUnique(vo.getPhone());
         checkUserNameUnique(vo.getUserName());
 
+        memberEntity.setNickname(vo.getUserName());
         memberEntity.setUsername(vo.getUserName());
         //密码进行MD5加密
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
