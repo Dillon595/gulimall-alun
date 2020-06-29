@@ -67,7 +67,6 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
         memberEntity.setPassword(encode);
         memberEntity.setMobile(vo.getPhone());
         memberEntity.setGender(0);
-        memberEntity.setStatus(1);
         memberEntity.setCreateTime(new Date());
 
         //保存数据
