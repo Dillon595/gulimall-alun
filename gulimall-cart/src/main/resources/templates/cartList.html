@@ -49,7 +49,7 @@
         <div class="one_search_top">
             <div class="one_top_left">
                 <a href="http://gulimall.com" class="one_left_logo"><img src="/static/cart/img/logo1.jpg"></a>
-                <a href="http://cart.gulimall.com/addCartItem" class="one_left_link">购物车</a>
+                <a href="http://cart.gulimall.com/cart.html" class="one_left_link">购物车</a>
             </div>
             <div class="one_top_right">
                 <input type="text" class="one_right_txt" placeholder="" onfocus="this.placeholder=''"
@@ -85,7 +85,7 @@
         </div>
 
         <div class="One_ShopCon">
-            <h1 th:if="${cart.items != null}">
+            <h1 th:if="${cart.items == null}">
                 购物车还没有商品，<a href="http://gulimall.com/">去购物</a>
             </h1>
             <ul th:if="${cart.items != null}">
@@ -94,7 +94,7 @@
                     </div>
                     <div>
                         <ol>
-                            <li><input type="checkbox" th:checked="${item.check}"></li>
+                            <li><input type="checkbox" th:attr="skuId=${item.skuId}" class="itemChecked" th:checked="${item.check}"></li>
                             <li>
                                 <dt><img th:src="${item.image}" alt=""></dt>
                                 <dd style="width: 300px;">
@@ -110,17 +110,16 @@
 
                             </li>
                             <li>
-                                <p>
-                                    <span>-</span>
-                                    <span th:text="${item.count}">5</span>
-                                    <span>+</span>
+                                <p th:attr="skuId=${item.skuId}">
+                                    <span class="countOpsBtn">-</span>
+                                    <span class="countOpsNum" th:text="${item.count}">5</span>
+                                    <span class="countOpsBtn">+</span>
                                 </p>
 
                             </li>
                             <li style="font-weight:bold"><p class="zj">￥[[${#numbers.formatDecimal(item.totalPrice,3,2)}]]</p></li>
                             <li>
-                                <p>删除</p>
-
+                                <p class="deleteItemBtn" th:attr="skuId=${item.skuId}">删除</p>
                             </li>
                         </ol>
                     </div>
@@ -172,7 +171,7 @@
         </dl>
     </div>
     <div>
-        <button type="button">删除</button>
+        <button type="button" onclick="deleteItem()">删除</button>
 
     </div>
 </div>
@@ -765,6 +764,33 @@
         $(this).children("p").children("img").attr("src", "img/one_mian_gwc2.png")
     }).mouseout(function () {
         $(this).children("p").children("img").attr("src", "img/one_mian_gwc1.png")
-    })
+    });
+
+    $(".itemChecked").click(function () {
+        const skuId = $(this).attr("skuId");
+        const checked = $(this).prop("checked");
+        location.href = "http://cart.gulimall.com/checkItem?skuId=" + skuId + "&checked=" + (checked ? 1 : 0);
+    });
+
+
+    $(".countOpsBtn").click(function () {
+        const skuId = $(this).parent().attr("skuId");
+        const num = $(this).parent().find(".countOpsNum").text();
+        location.href = "http://cart.gulimall.com/countItem?skuId=" + skuId + "&num=" + num;
+    });
+
+
+    let deleteId = 0;
+    $(".deleteItemBtn").click(function () {
+        deleteId = $(this).attr("skuId");
+    });
+
+    //删除购物车选项
+    function deleteItem() {
+        location.href = "http://cart.gulimall.com/deleteItem?skuId=" + deleteId;
+    }
+
+
+
 </script>
 </html>
