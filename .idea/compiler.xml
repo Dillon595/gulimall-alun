@@ -7,24 +7,26 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="gulimall-gateway" />
+        <module name="gulimall-order" />
+        <module name="gulimall-product" />
+        <module name="gulimall-test-sso-client" />
+        <module name="gulimall-search" />
         <module name="gulimall-coupon" />
         <module name="gulimall-auth-server" />
-        <module name="gulimall-third-party" />
-        <module name="gulimall-test-sso-server" />
-        <module name="gulimall-search" />
-        <module name="gulimall-gateway" />
-        <module name="gulimall-product" />
-        <module name="gulimall-order" />
-        <module name="gulimall-ware" />
-        <module name="renren-generator" />
-        <module name="gulimall-test-sso-client" />
-        <module name="gulimall-member" />
         <module name="gulimall-common" />
+        <module name="gulimall-test-sso-server" />
+        <module name="gulimall-third-party" />
+        <module name="renren-generator" />
+        <module name="gulimall-cart" />
+        <module name="gulimall-member" />
+        <module name="gulimall-ware" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="gulimall" target="1.8" />
       <module name="gulimall-auth-server" target="1.8" />
+      <module name="gulimall-cart" target="1.8" />
       <module name="gulimall-common" target="1.8" />
       <module name="gulimall-coupon" target="1.8" />
       <module name="gulimall-gateway" target="1.8" />
@@ -42,6 +44,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="gulimall-auth-server" options="-parameters" />
+      <module name="gulimall-cart" options="-parameters" />
       <module name="gulimall-coupon" options="-parameters" />
       <module name="gulimall-gateway" options="-parameters" />
       <module name="gulimall-member" options="-parameters" />
