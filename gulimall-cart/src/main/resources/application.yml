@@ -16,6 +16,13 @@ spring:
   session:
     store-type: redis
 
+#配置线程池
+gulimall:
+  thread:
+    coreSize: 20
+    maxSize: 200
+    keepAliveTime: 10
+
 
 
 

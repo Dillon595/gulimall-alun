@@ -22,6 +22,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("product/skuinfo")
 public class SkuInfoController {
+
     @Autowired
     private SkuInfoService skuInfoService;
 

@@ -10,7 +10,6 @@ import java.util.List;
  * @createTime: 2020-06-30 16:43
  **/
 
-// @Data
 public class CartItemVo {
 
     private Long skuId;
@@ -24,7 +23,7 @@ public class CartItemVo {
     /**
      * 商品套餐属性
      */
-    private List<String> skuAttr;
+    private List<String> skuAttrValues;
 
     private BigDecimal price;
 
@@ -64,12 +63,12 @@ public class CartItemVo {
         this.image = image;
     }
 
-    public List<String> getSkuAttr() {
-        return skuAttr;
+    public List<String> getSkuAttrValues() {
+        return skuAttrValues;
     }
 
-    public void setSkuAttr(List<String> skuAttr) {
-        this.skuAttr = skuAttr;
+    public void setSkuAttrValues(List<String> skuAttrValues) {
+        this.skuAttrValues = skuAttrValues;
     }
 
     public BigDecimal getPrice() {
@@ -94,12 +93,12 @@ public class CartItemVo {
      */
     public BigDecimal getTotalPrice() {
 
-        BigDecimal multiply = this.price.multiply(BigDecimal.valueOf(count));
-
-        return multiply;
+        return this.price.multiply(new BigDecimal("" + this.count));
     }
 
     public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
+
+
 }
