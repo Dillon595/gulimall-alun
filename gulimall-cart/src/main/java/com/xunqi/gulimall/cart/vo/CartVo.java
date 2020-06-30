@@ -1,5 +1,7 @@
 package com.xunqi.gulimall.cart.vo;
 
+import org.springframework.util.CollectionUtils;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -30,12 +32,12 @@ public class CartVo {
     /**
      * 商品总价
      */
-    private BigDecimal amount = new BigDecimal("0");
+    private BigDecimal totalAmount;
 
     /**
      * 减免价格
      */
-    private BigDecimal reduce;
+    private BigDecimal reduce = new BigDecimal("0.00");;
 
     public List<CartItemVo> getItems() {
         return items;
@@ -66,16 +68,18 @@ public class CartVo {
     }
 
 
-    public BigDecimal getAmount() {
-        BigDecimal count = BigDecimal.ZERO;
-        //计算购物项总价
-        if (items != null && items.size() > 0) {
-            for (CartItemVo item : items) {
-                count = count.add(item.getTotalPrice());
+    public BigDecimal getTotalAmount() {
+        BigDecimal amount = new BigDecimal("0");
+        // 计算购物项总价
+        if (!CollectionUtils.isEmpty(items)) {
+            for (CartItemVo cartItem : items) {
+                if (cartItem.getCheck()) {
+                    amount = amount.add(cartItem.getTotalPrice());
+                }
             }
         }
-        //总价格减去商品优惠价格
-        return count.subtract(getReduce());
+        // 计算优惠后的价格
+        return amount.subtract(getReduce());
     }
 
     public BigDecimal getReduce() {
