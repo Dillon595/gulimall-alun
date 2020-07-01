@@ -62,8 +62,7 @@ public class CartServiceImpl implements CartService {
             CompletableFuture<Void> getSkuInfoFuture = CompletableFuture.runAsync(() -> {
                 //1、远程查询当前要添加商品的信息
                 R productSkuInfo = productFeignService.getInfo(skuId);
-                SkuInfoVo skuInfo = productSkuInfo.getData("skuInfo", new TypeReference<SkuInfoVo>() {
-                });
+                SkuInfoVo skuInfo = productSkuInfo.getData("skuInfo", new TypeReference<SkuInfoVo>() {});
                 //数据赋值操作
                 cartItemVo.setSkuId(skuInfo.getSkuId());
                 cartItemVo.setTitle(skuInfo.getSkuTitle());
@@ -155,7 +154,6 @@ public class CartServiceImpl implements CartService {
 
     /**
      * 获取到我们要操作的购物车
-     *
      * @return
      */
     private BoundHashOperations<String, Object, Object> getCartOps() {
