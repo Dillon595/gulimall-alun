@@ -21,7 +21,17 @@ spring:
     virtual-host: /
     username: guest
     password: guest
-
+    #开启发送端确认
+    publisher-confirms: true
+    #开启发送端消息抵达队列的确认
+    publisher-returns: true
+    #只要抵达队列，以异步方式优先回调returnConfirm
+    template:
+      mandatory: true
+    #手动ack确认收到消息
+    listener:
+      simple:
+        acknowledge-mode: manual
 
 
 mybatis-plus:

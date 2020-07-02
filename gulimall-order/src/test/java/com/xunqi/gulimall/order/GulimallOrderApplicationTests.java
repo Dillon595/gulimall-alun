@@ -1,12 +1,18 @@
 package com.xunqi.gulimall.order;
 
+import com.xunqi.gulimall.order.entity.OrderReturnReasonEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Date;
+import java.util.UUID;
 
 
 @Slf4j
@@ -16,6 +22,27 @@ public class GulimallOrderApplicationTests {
 
     @Autowired
     private AmqpAdmin amqpAdmin;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+
+    @Test
+    public void sendMessageTest() {
+        OrderReturnReasonEntity reasonEntity = new OrderReturnReasonEntity();
+        reasonEntity.setId(1L);
+        reasonEntity.setCreateTime(new Date());
+        reasonEntity.setName("reason");
+        reasonEntity.setStatus(1);
+        reasonEntity.setSort(2);
+        String msg = "Hello World";
+        //1、发送消息,如果发送的消息是个对象，会使用序列化机制，将对象写出去，对象必须实现Serializable接口
+
+        //2、发送的对象类型的消息，可以是一个json
+        rabbitTemplate.convertAndSend("hello-java-exchange","hello2.java",
+                reasonEntity,new CorrelationData(UUID.randomUUID().toString()));
+        log.info("消息发送完成:{}",reasonEntity);
+    }
 
     /**
      * 1、如何创建Exchange、Queue、Binding
