@@ -3,6 +3,7 @@ package com.xunqi.gulimall.cart.service;
 import com.xunqi.gulimall.cart.vo.CartItemVo;
 import com.xunqi.gulimall.cart.vo.CartVo;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -60,4 +61,7 @@ public interface CartService {
      * @param skuId
      */
     void deleteIdCartInfo(Integer skuId);
+
+    List<CartItemVo> getUserCartItems();
+
 }

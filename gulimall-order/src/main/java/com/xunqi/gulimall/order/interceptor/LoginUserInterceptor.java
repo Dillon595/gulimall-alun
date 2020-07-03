@@ -22,7 +22,7 @@ import static com.xunqi.common.constant.AuthServerConstant.LOGIN_USER;
 @Component
 public class LoginUserInterceptor implements HandlerInterceptor {
 
-    private static ThreadLocal<MemberResponseVo> loginUser = new ThreadLocal<>();
+    public static ThreadLocal<MemberResponseVo> loginUser = new ThreadLocal<>();
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
