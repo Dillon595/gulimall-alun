@@ -1,20 +1,24 @@
 package com.xunqi.gulimall.order.service.impl;
 
+import com.alibaba.fastjson.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xunqi.common.utils.PageUtils;
 import com.xunqi.common.utils.Query;
+import com.xunqi.common.utils.R;
 import com.xunqi.common.vo.MemberResponseVo;
 import com.xunqi.gulimall.order.dao.OrderDao;
 import com.xunqi.gulimall.order.entity.OrderEntity;
 import com.xunqi.gulimall.order.feign.CartFeignService;
 import com.xunqi.gulimall.order.feign.MemberFeignService;
+import com.xunqi.gulimall.order.feign.WmsFeignService;
 import com.xunqi.gulimall.order.interceptor.LoginUserInterceptor;
 import com.xunqi.gulimall.order.service.OrderService;
 import com.xunqi.gulimall.order.vo.MemberAddressVo;
 import com.xunqi.gulimall.order.vo.OrderConfirmVo;
 import com.xunqi.gulimall.order.vo.OrderItemVo;
+import com.xunqi.gulimall.order.vo.SkuStockVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestAttributes;
@@ -25,6 +29,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.stream.Collectors;
 
 
 @Service("orderService")
@@ -35,6 +40,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
     @Autowired
     private CartFeignService cartFeignService;
+
+    @Autowired
+    private WmsFeignService wmsFeignService;
 
     @Autowired
     private ThreadPoolExecutor threadPoolExecutor;
@@ -77,7 +85,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
             confirmVo.setMemberAddressVos(address);
         }, threadPoolExecutor);
 
-
         //开启第二个异步任务
         CompletableFuture<Void> cartInfoFuture = CompletableFuture.runAsync(() -> {
 
@@ -88,7 +95,23 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
             List<OrderItemVo> currentCartItems = cartFeignService.getCurrentCartItems();
             confirmVo.setItems(currentCartItems);
             //feign在远程调用之前要构造请求，调用很多的拦截器
-        }, threadPoolExecutor);
+        }, threadPoolExecutor).thenRunAsync(() -> {
+            List<OrderItemVo> items = confirmVo.getItems();
+            //获取全部商品的id
+            List<Long> skuIds = items.stream()
+                    .map((itemVo -> itemVo.getSkuId()))
+                    .collect(Collectors.toList());
+
+            //远程查询商品库存信息
+            R skuHasStock = wmsFeignService.getSkuHasStock(skuIds);
+            List<SkuStockVo> skuStockVos = skuHasStock.getData("data", new TypeReference<List<SkuStockVo>>() {});
+
+            if (skuStockVos != null && skuStockVos.size() > 0) {
+                //将skuStockVos集合转换为map
+                Map<Long, Boolean> skuHasStockMap = skuStockVos.stream().collect(Collectors.toMap(SkuStockVo::getSkuId, SkuStockVo::getHasStock));
+                confirmVo.setStocks(skuHasStockMap);
+            }
+        },threadPoolExecutor);
 
         //3、查询用户积分
         Integer integration = memberResponseVo.getIntegration();

@@ -1,19 +1,15 @@
 package com.xunqi.gulimall.ware.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.xunqi.gulimall.ware.entity.WareInfoEntity;
-import com.xunqi.gulimall.ware.service.WareInfoService;
 import com.xunqi.common.utils.PageUtils;
 import com.xunqi.common.utils.R;
+import com.xunqi.gulimall.ware.entity.WareInfoEntity;
+import com.xunqi.gulimall.ware.service.WareInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Map;
 
 
 
@@ -29,6 +25,18 @@ import com.xunqi.common.utils.R;
 public class WareInfoController {
     @Autowired
     private WareInfoService wareInfoService;
+
+    /**
+     * 获取运费信息
+     * @return
+     */
+    @GetMapping(value = "/fare")
+    public R getFare(@RequestParam("addrId") Long addrId) {
+
+        BigDecimal fare = wareInfoService.getFare(addrId);
+
+        return R.ok().setData(fare);
+    }
 
     /**
      * 列表
