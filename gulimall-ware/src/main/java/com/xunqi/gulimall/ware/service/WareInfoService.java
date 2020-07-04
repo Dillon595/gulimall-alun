@@ -3,8 +3,8 @@ package com.xunqi.gulimall.ware.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xunqi.common.utils.PageUtils;
 import com.xunqi.gulimall.ware.entity.WareInfoEntity;
+import com.xunqi.gulimall.ware.vo.FareVo;
 
-import java.math.BigDecimal;
 import java.util.Map;
 
 /**
@@ -23,6 +23,6 @@ public interface WareInfoService extends IService<WareInfoEntity> {
      * @param addrId
      * @return
      */
-    BigDecimal getFare(Long addrId);
+    FareVo getFare(Long addrId);
 }
 

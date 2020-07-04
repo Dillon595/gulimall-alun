@@ -20,16 +20,21 @@ import com.xunqi.gulimall.order.vo.OrderConfirmVo;
 import com.xunqi.gulimall.order.vo.OrderItemVo;
 import com.xunqi.gulimall.order.vo.SkuStockVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
+import static com.xunqi.gulimall.order.constant.OrderConstant.USER_ORDER_TOKEN_PREFIX;
 
 
 @Service("orderService")
@@ -43,6 +48,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
     @Autowired
     private WmsFeignService wmsFeignService;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     @Autowired
     private ThreadPoolExecutor threadPoolExecutor;
@@ -74,7 +82,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
 
         //开启第一个异步任务
-
         CompletableFuture<Void> addressFuture = CompletableFuture.runAsync(() -> {
 
             //每一个线程都来共享之前的请求数据
@@ -120,6 +127,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         //4、价格数据自动计算
 
         //TODO 5、防重令牌(防止表单重复提交)
+        //为用户设置一个token，三十分钟过期时间（存在redis）
+        String token = UUID.randomUUID().toString().replace("-", "");
+        redisTemplate.opsForValue().set(USER_ORDER_TOKEN_PREFIX+memberResponseVo.getId(),token,30, TimeUnit.MINUTES);
+        confirmVo.setOrderToken(token);
+
 
         CompletableFuture.allOf(addressFuture,cartInfoFuture).get();
 
