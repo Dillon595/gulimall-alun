@@ -3,7 +3,6 @@ package com.xunqi.gulimall.ware.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xunqi.common.utils.PageUtils;
 import com.xunqi.gulimall.ware.entity.WareSkuEntity;
-import com.xunqi.gulimall.ware.vo.LockStockResultVo;
 import com.xunqi.gulimall.ware.vo.SkuHasStockVo;
 import com.xunqi.gulimall.ware.vo.WareSkuLockVo;
 
@@ -41,6 +40,6 @@ public interface WareSkuService extends IService<WareSkuEntity> {
      * @param vo
      * @return
      */
-    List<LockStockResultVo> orderLockStock(WareSkuLockVo vo);
+    boolean orderLockStock(WareSkuLockVo vo);
 }
 

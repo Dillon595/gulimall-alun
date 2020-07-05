@@ -25,6 +25,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 
+import static com.xunqi.common.constant.CartConstant.CART_PREFIX;
+
 /**
  * @Description:
  * @Created: with IntelliJ IDEA.
@@ -44,8 +46,6 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private ThreadPoolExecutor executor;
-
-    private final String CART_PREFIX = "gulimall:cart:";
 
     @Override
     public CartItemVo addToCart(Long skuId, Integer num) throws ExecutionException, InterruptedException {

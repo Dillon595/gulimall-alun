@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.xunqi.common.exception.NoStockException;
 import com.xunqi.common.utils.PageUtils;
 import com.xunqi.common.utils.Query;
 import com.xunqi.common.utils.R;
@@ -40,6 +41,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import static com.xunqi.common.constant.CartConstant.CART_PREFIX;
 import static com.xunqi.gulimall.order.constant.OrderConstant.USER_ORDER_TOKEN_PREFIX;
 
 
@@ -157,6 +159,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
      * @param vo
      * @return
      */
+    // @Transactional(isolation = Isolation.READ_COMMITTED) 设置事务的隔离级别
+    // @Transactional(propagation = Propagation.REQUIRED)   设置事务的传播级别
     @Transactional(rollbackFor = Exception.class)
     @Override
     public SubmitOrderResponseVo submitOrder(OrderSubmitVo vo) {
@@ -168,6 +172,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
         //获取当前用户登录的信息
         MemberResponseVo memberResponseVo = LoginUserInterceptor.loginUser.get();
+        responseVo.setCode(0);
 
         //1、验证令牌是否合法【令牌的对比和删除必须保证原子性】
         String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
@@ -193,7 +198,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
             if (Math.abs(payAmount.subtract(payPrice).doubleValue()) < 0.01) {
                 //金额对比
-                //3、保存订单
+                //TODO 3、保存订单
                 saveOrder(order);
 
                 //4、库存锁定,只要有异常，回滚订单数据
@@ -211,20 +216,28 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
                 }).collect(Collectors.toList());
                 lockVo.setLocks(orderItemVos);
 
-                //调用远程锁定库存的方法
+                //TODO 调用远程锁定库存的方法
                 R r = wmsFeignService.orderLockStock(lockVo);
                 if (r.getCode() == 0) {
                     //锁定成功
+                    responseVo.setOrder(order.getOrder());
+                    //删除购物车里的数据
+                    redisTemplate.delete(CART_PREFIX+memberResponseVo.getId());
 
+                    return responseVo;
                 } else {
                     //锁定失败
+                    String msg = (String) r.get("msg");
+                    throw new NoStockException(msg);
+                    // responseVo.setCode(3);
+                    // return responseVo;
                 }
 
             } else {
                 responseVo.setCode(2);
+                return responseVo;
             }
         }
-        return responseVo;
     }
 
     /**
@@ -236,6 +249,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         //获取订单信息
         OrderEntity order = orderCreateTo.getOrder();
         order.setModifyTime(new Date());
+        order.setCreateTime(new Date());
         //保存订单
         this.baseMapper.insert(order);
 
@@ -243,8 +257,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         List<OrderItemEntity> orderItems = orderCreateTo.getOrderItems();
         //批量保存订单项数据
         orderItemService.saveBatch(orderItems);
-
-
     }
 
 
@@ -262,6 +274,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         //3、验价(计算价格、积分等信息)
         computePrice(orderEntity,orderItemEntities);
 
+        createTo.setOrder(orderEntity);
+        createTo.setOrderItems(orderItemEntities);
 
         return createTo;
     }
@@ -314,7 +328,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         //设置删除状态(0-未删除，1-已删除)
         orderEntity.setDeleteStatus(0);
 
-
     }
 
 
@@ -331,6 +344,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setMemberId(memberResponseVo.getId());
         orderEntity.setOrderSn(orderSn);
+        orderEntity.setMemberUsername(memberResponseVo.getUsername());
 
         OrderSubmitVo orderSubmitVo = confirmVoThreadLocal.get();
 
@@ -356,7 +370,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         //设置订单相关的状态信息
         orderEntity.setStatus(OrderStatusEnum.CREATE_NEW.getCode());
         orderEntity.setAutoConfirmDay(7);
-
+        orderEntity.setConfirmStatus(0);
         return orderEntity;
     }
 
@@ -393,7 +407,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         OrderItemEntity orderItemEntity = new OrderItemEntity();
 
         //1、商品的spu信息
-        Long skuId = orderItemEntity.getSkuId();
+        Long skuId = items.getSkuId();
         //获取spu的信息
         R spuInfo = productFeignService.getSpuInfoBySkuId(skuId);
         SpuInfoVo spuInfoData = spuInfo.getData("data", new TypeReference<SpuInfoVo>() {

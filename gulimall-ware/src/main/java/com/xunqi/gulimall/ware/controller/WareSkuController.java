@@ -1,10 +1,10 @@
 package com.xunqi.gulimall.ware.controller;
 
+import com.xunqi.common.exception.NoStockException;
 import com.xunqi.common.utils.PageUtils;
 import com.xunqi.common.utils.R;
 import com.xunqi.gulimall.ware.entity.WareSkuEntity;
 import com.xunqi.gulimall.ware.service.WareSkuService;
-import com.xunqi.gulimall.ware.vo.LockStockResultVo;
 import com.xunqi.gulimall.ware.vo.SkuHasStockVo;
 import com.xunqi.gulimall.ware.vo.WareSkuLockVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import static com.xunqi.common.exception.BizCodeEnum.NO_STOCK_EXCEPTION;
 
 
 /**
@@ -37,9 +38,12 @@ public class WareSkuController {
     @PostMapping(value = "/lock/order")
     public R orderLockStock(@RequestBody WareSkuLockVo vo) {
 
-        List<LockStockResultVo> stockResultVos = wareSkuService.orderLockStock(vo);
-
-        return R.ok().setData(stockResultVos);
+        try {
+            boolean lockStock = wareSkuService.orderLockStock(vo);
+            return R.ok().setData(lockStock);
+        } catch (NoStockException e) {
+            return R.error(NO_STOCK_EXCEPTION.getCode(),NO_STOCK_EXCEPTION.getMessage());
+        }
     }
 
     /**
