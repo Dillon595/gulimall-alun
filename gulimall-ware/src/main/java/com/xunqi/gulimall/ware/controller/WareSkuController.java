@@ -4,7 +4,9 @@ import com.xunqi.common.utils.PageUtils;
 import com.xunqi.common.utils.R;
 import com.xunqi.gulimall.ware.entity.WareSkuEntity;
 import com.xunqi.gulimall.ware.service.WareSkuService;
+import com.xunqi.gulimall.ware.vo.LockStockResultVo;
 import com.xunqi.gulimall.ware.vo.SkuHasStockVo;
+import com.xunqi.gulimall.ware.vo.WareSkuLockVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +28,19 @@ import java.util.Map;
 public class WareSkuController {
     @Autowired
     private WareSkuService wareSkuService;
+
+    /**
+     * 锁定库存
+     * @param vo
+     * @return
+     */
+    @PostMapping(value = "/lock/order")
+    public R orderLockStock(@RequestBody WareSkuLockVo vo) {
+
+        List<LockStockResultVo> stockResultVos = wareSkuService.orderLockStock(vo);
+
+        return R.ok().setData(stockResultVos);
+    }
 
     /**
      * 查询sku是否有库存

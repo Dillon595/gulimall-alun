@@ -10,7 +10,9 @@ import com.xunqi.gulimall.ware.dao.WareSkuDao;
 import com.xunqi.gulimall.ware.entity.WareSkuEntity;
 import com.xunqi.gulimall.ware.feign.ProductFeignService;
 import com.xunqi.gulimall.ware.service.WareSkuService;
+import com.xunqi.gulimall.ware.vo.LockStockResultVo;
 import com.xunqi.gulimall.ware.vo.SkuHasStockVo;
+import com.xunqi.gulimall.ware.vo.WareSkuLockVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -78,7 +80,6 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
             } catch (Exception e) {
 
             }
-
             //添加库存信息
             wareSkuDao.insert(wareSkuEntity);
         } else {
@@ -99,6 +100,16 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
             return skuHasStockVo;
         }).collect(Collectors.toList());
         return skuHasStockVos;
+    }
+
+    /**
+     * 为某个订单锁定库存
+     * @param vo
+     * @return
+     */
+    @Override
+    public List<LockStockResultVo> orderLockStock(WareSkuLockVo vo) {
+        return null;
     }
 
 }

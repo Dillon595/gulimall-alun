@@ -19,7 +19,7 @@ public interface WareInfoService extends IService<WareInfoEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     /**
-     * 获取运费信息
+     * 获取运费和收货地址信息
      * @param addrId
      * @return
      */
