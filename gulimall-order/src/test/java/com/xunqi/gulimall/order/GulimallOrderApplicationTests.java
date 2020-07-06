@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.UUID;
 
 
@@ -78,6 +79,17 @@ public class GulimallOrderApplicationTests {
         amqpAdmin.declareBinding(binding);
         log.info("Binding[{}]创建成功：","hello-java-binding");
 
+    }
+
+    @Test
+    public void create() {
+        HashMap<String, Object> arguments = new HashMap<>();
+        arguments.put("x-dead-letter-exchange", "order-event-exchange");
+        arguments.put("x-dead-letter-routing-key", "order.release.order");
+        arguments.put("x-message-ttl", 60000); // 消息过期时间 1分钟
+        Queue queue = new Queue("order.delay.queue", true, false, false, arguments);
+        amqpAdmin.declareQueue(queue);
+        log.info("Queue[{}]创建成功：","order.delay.queue");
     }
 
 }

@@ -24,11 +24,11 @@ import com.xunqi.gulimall.order.service.OrderService;
 import com.xunqi.gulimall.order.to.OrderCreateTo;
 import com.xunqi.gulimall.order.to.SpuInfoVo;
 import com.xunqi.gulimall.order.vo.*;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -161,7 +161,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
      */
     // @Transactional(isolation = Isolation.READ_COMMITTED) 设置事务的隔离级别
     // @Transactional(propagation = Propagation.REQUIRED)   设置事务的传播级别
-    @Transactional(rollbackFor = Exception.class)
+    // @Transactional(rollbackFor = Exception.class)
+    @GlobalTransactional(rollbackFor = Exception.class)
     @Override
     public SubmitOrderResponseVo submitOrder(OrderSubmitVo vo) {
 
@@ -217,13 +218,14 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
                 lockVo.setLocks(orderItemVos);
 
                 //TODO 调用远程锁定库存的方法
+                //出现的问题：扣减库存成功了，但是由于网络原因超时，出现异常，导致订单事务回滚，库存事务不回滚(解决方案：seata)
+                //为了保证高并发，不推荐使用seata，因为是加锁，并行化，提升不了效率,可以发消息给库存服务
                 R r = wmsFeignService.orderLockStock(lockVo);
                 if (r.getCode() == 0) {
                     //锁定成功
                     responseVo.setOrder(order.getOrder());
                     //删除购物车里的数据
                     redisTemplate.delete(CART_PREFIX+memberResponseVo.getId());
-
                     return responseVo;
                 } else {
                     //锁定失败

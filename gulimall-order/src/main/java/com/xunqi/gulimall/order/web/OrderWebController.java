@@ -1,5 +1,6 @@
 package com.xunqi.gulimall.order.web;
 
+import com.xunqi.common.exception.NoStockException;
 import com.xunqi.gulimall.order.service.OrderService;
 import com.xunqi.gulimall.order.vo.OrderConfirmVo;
 import com.xunqi.gulimall.order.vo.OrderSubmitVo;
@@ -55,21 +56,29 @@ public class OrderWebController {
     @PostMapping(value = "/submitOrder")
     public String submitOrder(OrderSubmitVo vo, Model model, RedirectAttributes attributes) {
 
-        SubmitOrderResponseVo responseVo = orderService.submitOrder(vo);
-        //下单成功来到支付选择页
-        //下单失败回到订单确认页重新确定订单信息
-        if (responseVo.getCode() == 0) {
-            //成功
-            model.addAttribute("submitOrderResp",responseVo);
-            return "pay";
-        } else {
-            String msg = "下单失败";
-            switch (responseVo.getCode()) {
-                case 1: msg += "令牌订单信息过期，请刷新再次提交"; break;
-                case 2: msg += "订单商品价格发生变化，请确认后再次提交"; break;
-                case 3: msg += "库存锁定失败，商品库存不足"; break;
+        try {
+            SubmitOrderResponseVo responseVo = orderService.submitOrder(vo);
+            //下单成功来到支付选择页
+            //下单失败回到订单确认页重新确定订单信息
+            if (responseVo.getCode() == 0) {
+                //成功
+                model.addAttribute("submitOrderResp",responseVo);
+                return "pay";
+            } else {
+                String msg = "下单失败";
+                switch (responseVo.getCode()) {
+                    case 1: msg += "令牌订单信息过期，请刷新再次提交"; break;
+                    case 2: msg += "订单商品价格发生变化，请确认后再次提交"; break;
+                    case 3: msg += "库存锁定失败，商品库存不足"; break;
+                }
+                attributes.addFlashAttribute("msg",msg);
+                return "redirect:http://order.gulimall.com/toTrade";
             }
-            attributes.addFlashAttribute("msg",msg);
+        } catch (Exception e) {
+            if (e instanceof NoStockException) {
+                String message = ((NoStockException)e).getMessage();
+                attributes.addFlashAttribute("msg",message);
+            }
             return "redirect:http://order.gulimall.com/toTrade";
         }
     }

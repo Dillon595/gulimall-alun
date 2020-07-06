@@ -57,6 +57,7 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
         return new PageUtils(page);
     }
 
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void addStock(Long skuId, Long wareId, Integer skuNum) {

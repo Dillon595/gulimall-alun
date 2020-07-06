@@ -19,6 +19,7 @@ import com.xunqi.gulimall.product.feign.SearchFeignService;
 import com.xunqi.gulimall.product.feign.WareFeignService;
 import com.xunqi.gulimall.product.service.*;
 import com.xunqi.gulimall.product.vo.*;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +85,8 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
      *  //TODO：高级部分完善后续
      * @param vo 新增商品
      */
-    @Transactional(rollbackFor = Exception.class)
+    @GlobalTransactional(rollbackFor = Exception.class)
+    //@Transactional(rollbackFor = Exception.class)
     @Override
     public void savesupInfo(SpuSaveVo vo) {
 
@@ -189,7 +191,6 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                 skuReductionTo.setSkuId(skuId);
                 if (skuReductionTo.getFullCount() > 0 || skuReductionTo.getFullPrice().compareTo(BigDecimal.ZERO) == 1) {
                     R r1 = couponFeignService.saveSkuReduction(skuReductionTo);
-
                     if (r1.getCode() != 0) {
                         log.error("远程保存sku积分信息失败");
                     }
