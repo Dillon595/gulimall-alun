@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xunqi.common.exception.NoStockException;
+import com.xunqi.common.to.OrderTo;
 import com.xunqi.common.to.mq.StockDetailTo;
 import com.xunqi.common.to.mq.StockLockedTo;
 import com.xunqi.common.utils.PageUtils;
@@ -234,7 +235,6 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
          *              订单状态：已取消：解锁库存
          *                      已支付：不能解锁库存
          */
-
         WareOrderTaskDetailEntity taskDetailInfo = wareOrderTaskDetailService.getById(detailId);
         if (taskDetailInfo != null) {
             //查出wms_ware_order_task工作单的信息
@@ -249,7 +249,7 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
                 OrderVo orderInfo = orderData.getData("data", new TypeReference<OrderVo>() {});
 
                 //判断订单状态是否已取消或者支付或者订单不存在
-                if (orderInfo == null || orderInfo.getStatus() == 0) {
+                if (orderInfo == null || orderInfo.getStatus() == 4) {
                     //订单已被取消，才能解锁库存
                     if (taskDetailInfo.getLockStatus() == 1) {
                         //当前库存工作单详情状态1，已锁定，但是未解锁才可以解锁
@@ -264,6 +264,33 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
         } else {
             //无需解锁
         }
+    }
+
+    /**
+     * 防止订单服务卡顿，导致订单状态消息一直改不了，库存优先到期，查订单状态新建，什么都不处理
+     * 导致卡顿的订单，永远都不能解锁库存
+     * @param orderTo
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void unlockStock(OrderTo orderTo) {
+
+        String orderSn = orderTo.getOrderSn();
+        //查一下最新的库存解锁状态，防止重复解锁库存
+        WareOrderTaskEntity orderTaskEntity = wareOrderTaskService.getOrderTaskByOrderSn(orderSn);
+
+        //按照工作单的id找到所有 没有解锁的库存，进行解锁
+        Long id = orderTaskEntity.getId();
+        List<WareOrderTaskDetailEntity> list = wareOrderTaskDetailService.list(new QueryWrapper<WareOrderTaskDetailEntity>()
+                .eq("task_id", id).eq("lock_status", 1));
+
+        for (WareOrderTaskDetailEntity taskDetailEntity : list) {
+            unLockStock(taskDetailEntity.getSkuId(),
+                    taskDetailEntity.getWareId(),
+                    taskDetailEntity.getSkuNum(),
+                    taskDetailEntity.getId());
+        }
+
     }
 
     /**

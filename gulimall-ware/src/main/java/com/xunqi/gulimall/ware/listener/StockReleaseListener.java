@@ -1,8 +1,10 @@
 package com.xunqi.gulimall.ware.listener;
 
 import com.rabbitmq.client.Channel;
+import com.xunqi.common.to.OrderTo;
 import com.xunqi.common.to.mq.StockLockedTo;
 import com.xunqi.gulimall.ware.service.WareSkuService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -18,6 +20,7 @@ import java.io.IOException;
  * @createTime: 2020-07-07 00:20
  **/
 
+@Slf4j
 @RabbitListener(queues = "stock.release.stock.queue")
 @Service
 public class StockReleaseListener {
@@ -36,15 +39,32 @@ public class StockReleaseListener {
      */
     @RabbitHandler
     public void handleStockLockedRelease(StockLockedTo to, Message message, Channel channel) throws IOException {
-        System.out.println("收到解锁库存的消息");
+        log.info("******收到解锁库存的信息******");
+
         try {
             //解锁库存
             wareSkuService.unlockStock(to);
+            // 手动删除消息
             channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
         } catch (Exception e) {
+            // 解锁失败 将消息重新放回队列，让别人消费
             channel.basicReject(message.getMessageProperties().getDeliveryTag(),true);
         }
+    }
 
+    @RabbitHandler
+    public void handleOrderCloseRelease(OrderTo orderTo, Message message, Channel channel) throws IOException {
+
+        log.info("******收到订单关闭，准备解锁库存的信息******");
+
+        try {
+            wareSkuService.unlockStock(orderTo);
+            // 手动删除消息
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
+        } catch (Exception e) {
+            // 解锁失败 将消息重新放回队列，让别人消费
+            channel.basicReject(message.getMessageProperties().getDeliveryTag(),true);
+        }
     }
 
 
