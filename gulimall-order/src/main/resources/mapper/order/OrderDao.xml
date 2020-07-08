@@ -51,7 +51,7 @@
 
 
     <update id="updateOrderStatus">
-        UPDATE oms_order SET `status` = 1 WHERE order_sn = #{orderSn}
+        UPDATE oms_order SET `status` = #{code} WHERE order_sn = #{orderSn}
     </update>
 
 

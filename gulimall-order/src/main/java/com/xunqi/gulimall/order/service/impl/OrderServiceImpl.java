@@ -2,15 +2,19 @@ package com.xunqi.gulimall.order.service.impl;
 
 import com.alibaba.fastjson.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lly835.bestpay.model.PayResponse;
+import com.lly835.bestpay.service.BestPayService;
 import com.xunqi.common.exception.NoStockException;
 import com.xunqi.common.to.OrderTo;
 import com.xunqi.common.utils.PageUtils;
 import com.xunqi.common.utils.Query;
 import com.xunqi.common.utils.R;
 import com.xunqi.common.vo.MemberResponseVo;
+import com.xunqi.gulimall.order.constant.PayConstant;
 import com.xunqi.gulimall.order.dao.OrderDao;
 import com.xunqi.gulimall.order.entity.OrderEntity;
 import com.xunqi.gulimall.order.entity.OrderItemEntity;
@@ -27,6 +31,7 @@ import com.xunqi.gulimall.order.service.PaymentInfoService;
 import com.xunqi.gulimall.order.to.OrderCreateTo;
 import com.xunqi.gulimall.order.to.SpuInfoVo;
 import com.xunqi.gulimall.order.vo.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +54,7 @@ import java.util.stream.Collectors;
 import static com.xunqi.gulimall.order.constant.OrderConstant.USER_ORDER_TOKEN_PREFIX;
 
 
+@Slf4j
 @Service("orderService")
 public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> implements OrderService {
 
@@ -77,6 +83,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
     @Autowired
     private PaymentInfoService paymentInfoService;
+
+    @Autowired
+    private BestPayService bestPayService;
 
     @Autowired
     private ThreadPoolExecutor threadPoolExecutor;
@@ -598,12 +607,21 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
         if (tradeStatus.equals("TRADE_SUCCESS") || tradeStatus.equals("TRADE_FINISHED")) {
             //支付成功状态
+            OrderEntity update = new OrderEntity();
             String orderSn = asyncVo.getOut_trade_no(); //获取订单号
-            this.updateOrderStatus(orderSn,OrderStatusEnum.PAYED.getCode());
+            update.setStatus(OrderStatusEnum.PAYED.getCode());
+            update.setModifyTime(new Date());
+            update.setPayType(PayConstant.ALIPAY);
+            update.setPaymentTime(new Date());
+            update.setOrderSn(orderSn);
+            this.update(update,new UpdateWrapper<OrderEntity>().eq("order_sn",orderSn));
+            // this.updateById(update);
+            // this.updateOrderStatus(orderSn,OrderStatusEnum.PAYED.getCode());
         }
 
         return "success";
     }
+
 
     /**
      * 修改订单状态
@@ -613,7 +631,57 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     private void updateOrderStatus(String orderSn, Integer code) {
 
         this.baseMapper.updateOrderStatus(orderSn,code);
+    }
 
+    /**
+     * 微信异步通知结果
+     * @param notifyData
+     * @return
+     */
+    @Override
+    public String asyncNotify(String notifyData) {
+
+        //签名效验
+        PayResponse payResponse = bestPayService.asyncNotify(notifyData);
+        log.info("payResponse={}",payResponse);
+
+        //2.金额效验（从数据库查订单）
+        OrderEntity orderEntity = this.getOrderByOrderSn(payResponse.getOrderId());
+
+        //如果查询出来的数据是null的话
+        //比较严重(正常情况下是不会发生的)发出告警：钉钉、短信
+        if (orderEntity == null) {
+            //TODO 发出告警，钉钉，短信
+            throw new RuntimeException("通过订单编号查询出来的结果是null");
+        }
+
+        //判断订单状态状态是否为已支付或者是已取消,如果不是订单状态不是已支付状态
+        Integer status = orderEntity.getStatus();
+        if (status.equals(OrderStatusEnum.PAYED.getCode()) || status.equals(OrderStatusEnum.CANCLED.getCode())) {
+            throw new RuntimeException("该订单已失效,orderNo=" + payResponse.getOrderId());
+        }
+
+        //判断金额是否一致,Double类型比较大小，精度问题不好控制
+        if (orderEntity.getPayAmount().compareTo(BigDecimal.valueOf(payResponse.getOrderAmount())) != 0) {
+            //TODO 告警
+            throw new RuntimeException("异步通知中的金额和数据库里的不一致,orderNo=" + payResponse.getOrderId());
+        }
+
+        //3.修改订单支付状态
+        //支付成功状态
+        OrderEntity update = new OrderEntity();
+        update.setStatus(OrderStatusEnum.PAYED.getCode());
+        update.setModifyTime(new Date());
+        update.setPayType(PayConstant.WXPAY);
+        update.setPaymentTime(new Date());
+        // this.update(update,new UpdateWrapper<OrderEntity>().eq("order_sn",orderSn));
+        this.updateById(update);
+
+        //4.告诉微信不要再重复通知了
+        return "<xml>\n" +
+                "  <return_code><![CDATA[SUCCESS]]></return_code>\n" +
+                "  <return_msg><![CDATA[OK]]></return_msg>\n" +
+                "</xml>";
     }
 
 
