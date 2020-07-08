@@ -50,4 +50,9 @@
     </resultMap>
 
 
+    <update id="updateOrderStatus">
+        UPDATE oms_order SET `status` = 1 WHERE order_sn = #{orderSn}
+    </update>
+
+
 </mapper>

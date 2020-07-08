@@ -3,10 +3,7 @@ package com.xunqi.gulimall.order.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xunqi.common.utils.PageUtils;
 import com.xunqi.gulimall.order.entity.OrderEntity;
-import com.xunqi.gulimall.order.vo.OrderConfirmVo;
-import com.xunqi.gulimall.order.vo.OrderSubmitVo;
-import com.xunqi.gulimall.order.vo.PayVo;
-import com.xunqi.gulimall.order.vo.SubmitOrderResponseVo;
+import com.xunqi.gulimall.order.vo.*;
 
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -61,5 +58,12 @@ public interface OrderService extends IService<OrderEntity> {
      * @return
      */
     PageUtils queryPageWithItem(Map<String, Object> params);
+
+    /**
+     *支付宝异步通知处理订单数据
+     * @param asyncVo
+     * @return
+     */
+    String handlePayResult(PayAsyncVo asyncVo);
 }
 

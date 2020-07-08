@@ -29,7 +29,7 @@ public class PayWebController {
     /**
      * 用户下单
      * 1、让支付页让浏览器展示
-     * 2、支付成功以后，挑战到用户的订单列表页
+     * 2、支付成功以后，跳转到用户的订单列表页
      * @param orderSn
      * @return
      * @throws AlipayApiException

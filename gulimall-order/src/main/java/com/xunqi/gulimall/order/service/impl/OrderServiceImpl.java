@@ -14,6 +14,7 @@ import com.xunqi.common.vo.MemberResponseVo;
 import com.xunqi.gulimall.order.dao.OrderDao;
 import com.xunqi.gulimall.order.entity.OrderEntity;
 import com.xunqi.gulimall.order.entity.OrderItemEntity;
+import com.xunqi.gulimall.order.entity.PaymentInfoEntity;
 import com.xunqi.gulimall.order.enume.OrderStatusEnum;
 import com.xunqi.gulimall.order.feign.CartFeignService;
 import com.xunqi.gulimall.order.feign.MemberFeignService;
@@ -22,6 +23,7 @@ import com.xunqi.gulimall.order.feign.WmsFeignService;
 import com.xunqi.gulimall.order.interceptor.LoginUserInterceptor;
 import com.xunqi.gulimall.order.service.OrderItemService;
 import com.xunqi.gulimall.order.service.OrderService;
+import com.xunqi.gulimall.order.service.PaymentInfoService;
 import com.xunqi.gulimall.order.to.OrderCreateTo;
 import com.xunqi.gulimall.order.to.SpuInfoVo;
 import com.xunqi.gulimall.order.vo.*;
@@ -72,6 +74,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private PaymentInfoService paymentInfoService;
 
     @Autowired
     private ThreadPoolExecutor threadPoolExecutor;
@@ -379,7 +384,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         OrderCreateTo createTo = new OrderCreateTo();
 
         //1、生成订单号
-        String orderSn = IdWorker.getTimeId();
+        String orderSn = IdWorker.getTimeId().substring(0,16);
         OrderEntity orderEntity = builderOrder(orderSn);
 
         //2、获取到所有的订单项
@@ -563,6 +568,58 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         orderItemEntity.setRealAmount(subtract);
 
         return orderItemEntity;
+    }
+
+
+    /**
+     * 处理支付宝的支付结果
+     * @param asyncVo
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public String handlePayResult(PayAsyncVo asyncVo) {
+
+        //保存交易流水信息
+        PaymentInfoEntity paymentInfo = new PaymentInfoEntity();
+        paymentInfo.setOrderSn(asyncVo.getOut_trade_no());
+        paymentInfo.setAlipayTradeNo(asyncVo.getTrade_no());
+        paymentInfo.setTotalAmount(new BigDecimal(asyncVo.getBuyer_pay_amount()));
+        paymentInfo.setSubject(asyncVo.getBody());
+        paymentInfo.setPaymentStatus(asyncVo.getTrade_status());
+        paymentInfo.setCreateTime(new Date());
+        paymentInfo.setCallbackTime(asyncVo.getNotify_time());
+        //添加到数据库中
+        this.paymentInfoService.save(paymentInfo);
+
+        //修改订单状态
+        //获取当前状态
+        String tradeStatus = asyncVo.getTrade_status();
+
+        if (tradeStatus.equals("TRADE_SUCCESS") || tradeStatus.equals("TRADE_FINISHED")) {
+            //支付成功状态
+            String orderSn = asyncVo.getOut_trade_no(); //获取订单号
+            this.updateOrderStatus(orderSn,OrderStatusEnum.PAYED.getCode());
+        }
+
+        return "success";
+    }
+
+    /**
+     * 修改订单状态
+     * @param orderSn
+     * @param code
+     */
+    private void updateOrderStatus(String orderSn, Integer code) {
+
+        this.baseMapper.updateOrderStatus(orderSn,code);
+
+    }
+
+
+    public static void main(String[] args) {
+        String orderSn = IdWorker.getTimeId().substring(0,16);
+        System.out.println(orderSn);
     }
 
 }
