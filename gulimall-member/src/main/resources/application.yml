@@ -14,11 +14,16 @@ spring:
   application:
     name: gulimall-member
 
+  redis:
+    host: 192.168.77.130
+    port: 6379
+
+  session:
+    store-type: redis
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
 
-  #\u8BBE\u7F6E\u5B9E\u4F53\u7C7B\u7684\u81EA\u589E\u4E3B\u952E
   global-config:
     db-config:
       id-type: auto

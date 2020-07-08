@@ -4,8 +4,8 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:8848 #Nacos\u670D\u52A1\u6CE8\u518C\u4E2D\u5FC3\u5730\u5740
+        server-addr: localhost:8848
       config:
-        server-addr: localhost:8848 #Nacos\u4F5C\u4E3A\u914D\u7F6E\u4E2D\u5FC3\u5730\u5740
-#        file-extension: yml #\u6307\u5B9Ayaml\u683C\u5F0F\u7684\u914D\u7F6E
+        server-addr: localhost:8848
+#        file-extension: yml
         namespace: ea65d118-135f-4928-bbc6-c8ec85b3fd78

@@ -44,7 +44,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static com.xunqi.common.constant.CartConstant.CART_PREFIX;
 import static com.xunqi.gulimall.order.constant.OrderConstant.USER_ORDER_TOKEN_PREFIX;
 
 
@@ -236,7 +235,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
                     rabbitTemplate.convertAndSend("order-event-exchange","order.create.order",order.getOrder());
 
                     //删除购物车里的数据
-                    redisTemplate.delete(CART_PREFIX+memberResponseVo.getId());
+                    //redisTemplate.delete(CART_PREFIX+memberResponseVo.getId());
                     return responseVo;
                 } else {
                     //锁定失败
@@ -288,14 +287,71 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
             OrderTo orderTo = new OrderTo();
             BeanUtils.copyProperties(orderInfo, orderTo);
 
-            // 确保每个消息发送成功，给每个消息做好日志记录，保存每个消息的详细信息
-            // 定期扫描数据库，重新发送失败的消息
             try {
+                //TODO 确保每个消息发送成功，给每个消息做好日志记录，(给数据库保存每一个详细信息)保存每个消息的详细信息
                 rabbitTemplate.convertAndSend("order-event-exchange", "order.release.other", orderTo);
             } catch (Exception e) {
-
+                //TODO 定期扫描数据库，重新发送失败的消息
             }
         }
+    }
+
+
+    /**
+     * 获取当前订单的支付信息
+     * @param orderSn
+     * @return
+     */
+    @Override
+    public PayVo getOrderPay(String orderSn) {
+
+        PayVo payVo = new PayVo();
+        OrderEntity orderInfo = this.getOrderByOrderSn(orderSn);
+
+        //保留两位小数点，向上取值
+        BigDecimal payAmount = orderInfo.getPayAmount().setScale(2, BigDecimal.ROUND_UP);
+        payVo.setTotal_amount(payAmount.toString());
+        payVo.setOut_trade_no(orderInfo.getOrderSn());
+
+        //查询订单项的数据
+        List<OrderItemEntity> orderItemInfo = orderItemService.list(
+                new QueryWrapper<OrderItemEntity>().eq("order_sn", orderSn));
+        OrderItemEntity orderItemEntity = orderItemInfo.get(0);
+        payVo.setBody(orderItemEntity.getSkuAttrsVals());
+
+        payVo.setSubject(orderItemEntity.getSkuName());
+
+        return payVo;
+    }
+
+    /**
+     * 查询当前用户所有订单数据
+     * @param params
+     * @return
+     */
+    @Override
+    public PageUtils queryPageWithItem(Map<String, Object> params) {
+
+        MemberResponseVo memberResponseVo = LoginUserInterceptor.loginUser.get();
+
+        IPage<OrderEntity> page = this.page(
+                new Query<OrderEntity>().getPage(params),
+                new QueryWrapper<OrderEntity>()
+                        .eq("member_id",memberResponseVo.getId()).orderByDesc("create_time")
+        );
+
+        //遍历所有订单集合
+        List<OrderEntity> orderEntityList = page.getRecords().stream().map(order -> {
+            //根据订单号查询订单项里的数据
+            List<OrderItemEntity> orderItemEntities = orderItemService.list(new QueryWrapper<OrderItemEntity>()
+                    .eq("order_sn", order.getOrderSn()));
+            order.setOrderItemEntityList(orderItemEntities);
+            return order;
+        }).collect(Collectors.toList());
+
+        page.setRecords(orderEntityList);
+
+        return new PageUtils(page);
     }
 
     /**
