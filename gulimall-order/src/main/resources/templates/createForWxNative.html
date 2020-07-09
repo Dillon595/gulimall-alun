@@ -10,23 +10,21 @@
 
 <script src="https://cdn.bootcss.com/jquery/1.5.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     jQuery('#myQrcode').qrcode({
-        text	: "${codeUrl}"
+        text	: [[${codeUrl}]]
     });
 
     $(function () {
         //定时器
         setInterval(function () {
-            console.log('开始查询支付状态...')
+            console.log('开始查询支付状态...');
             $.ajax({
                 'url': '/queryByOrderId',
                 data: {
                     'orderId': $('#orderId').text()
                 },
                 success: function (result) {
-                    alert(result);
-                    console.log(result);
                     if (result.status != null
                         && result.status === 1) {
                         location.href = $('#returnUrl').text()

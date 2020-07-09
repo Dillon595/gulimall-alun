@@ -1,0 +1,30 @@
+server:
+  port: 25000
+
+spring:
+  application:
+    name: gulimall-seckill
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+
+  redis:
+    host: 192.168.77.130
+    port: 6379
+
+  #配置异步任务线程池
+  task:
+    execution:
+      pool:
+        core-size: 5
+        max-size: 50
+
+
+#logging:
+#  level:
+#    com.xunqi.gulimall.seckill: debug
+#    root: info
+#  pattern:
+#    console: "%d{yyyy-MM-dd} [%thread] - %msg%n"

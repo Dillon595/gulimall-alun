@@ -9,6 +9,7 @@ import com.xunqi.gulimall.coupon.dao.MemberPriceDao;
 import com.xunqi.gulimall.coupon.entity.MemberPriceEntity;
 import com.xunqi.gulimall.coupon.service.MemberPriceService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Map;
 
@@ -18,9 +19,18 @@ public class MemberPriceServiceImpl extends ServiceImpl<MemberPriceDao, MemberPr
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
+
+        QueryWrapper<MemberPriceEntity> queryWrapper = new QueryWrapper<>();
+
+        String key = (String) params.get("key");
+
+        if (!StringUtils.isEmpty(key)) {
+            queryWrapper.eq("id",key).or().eq("sku_id",key).or().eq("member_level_id",key);
+        }
+
         IPage<MemberPriceEntity> page = this.page(
                 new Query<MemberPriceEntity>().getPage(params),
-                new QueryWrapper<MemberPriceEntity>()
+                queryWrapper
         );
 
         return new PageUtils(page);

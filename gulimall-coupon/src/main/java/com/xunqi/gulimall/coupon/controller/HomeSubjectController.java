@@ -50,8 +50,7 @@ public class HomeSubjectController {
     /**
      * 保存
      */
-    @RequestMapping("/save")
-    //@RequiresPermissions("coupon:homesubject:save")
+    @PostMapping("/save")
     public R save(@RequestBody HomeSubjectEntity homeSubject){
 		homeSubjectService.save(homeSubject);
 
@@ -62,7 +61,6 @@ public class HomeSubjectController {
      * 修改
      */
     @RequestMapping("/update")
-    //@RequiresPermissions("coupon:homesubject:update")
     public R update(@RequestBody HomeSubjectEntity homeSubject){
 		homeSubjectService.updateById(homeSubject);
 

@@ -9,7 +9,14 @@ import com.xunqi.gulimall.coupon.dao.SeckillSessionDao;
 import com.xunqi.gulimall.coupon.entity.SeckillSessionEntity;
 import com.xunqi.gulimall.coupon.service.SeckillSessionService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 
 
@@ -18,12 +25,87 @@ public class SeckillSessionServiceImpl extends ServiceImpl<SeckillSessionDao, Se
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
+
+        QueryWrapper<SeckillSessionEntity> queryWrapper = new QueryWrapper<>();
+
+        String key = (String) params.get("key");
+
+        if (!StringUtils.isEmpty(key)) {
+            queryWrapper.eq("id",key);
+        }
+
         IPage<SeckillSessionEntity> page = this.page(
                 new Query<SeckillSessionEntity>().getPage(params),
-                new QueryWrapper<SeckillSessionEntity>()
+                queryWrapper
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public List<SeckillSessionEntity> getLates3DaySession() {
+
+        //计算最近三天
+        // Date date = new Date();
+        LocalDate now = LocalDate.now();
+        LocalDate plus = now.plus(Duration.ofDays(1));
+        List<SeckillSessionEntity> list = this.baseMapper.selectList(new QueryWrapper<SeckillSessionEntity>()
+                .between("start_time", startTime(), endTime()));
+
+        return null;
+    }
+
+    /**
+     * 当前时间
+     * @return
+     */
+    private String startTime() {
+        LocalDate now = LocalDate.now();
+        LocalTime min = LocalTime.MIN;
+        LocalDateTime start = LocalDateTime.of(now, min);
+
+        //格式化时间
+        String startFormat = start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return startFormat;
+    }
+
+    /**
+     * 结束时间
+     * @return
+     */
+    private String endTime() {
+        LocalDate now = LocalDate.now();
+        LocalDate plus = now.plusDays(2);
+        LocalTime max = LocalTime.MAX;
+        LocalDateTime end = LocalDateTime.of(plus, max);
+
+        //格式化时间
+        String endFormat = end.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return endFormat;
+    }
+
+    public static void main(String[] args) {
+        // LocalDate now = LocalDate.now();
+        // LocalDate plus = now.plusDays(2);
+        // LocalDateTime now1 = LocalDateTime.now();
+        // LocalTime now2 = LocalTime.now();
+        //
+        // LocalTime max = LocalTime.MAX;
+        // LocalTime min = LocalTime.MIN;
+        //
+        // LocalDateTime start = LocalDateTime.of(now, min);
+        // LocalDateTime end = LocalDateTime.of(plus, max);
+        //
+        // System.out.println(now);
+        // System.out.println(now1);
+        // System.out.println(now2);
+        // System.out.println(plus);
+        //
+        // System.out.println(start);
+        // System.out.println(end);
+
+        // System.out.println(startTime());
+        // System.out.println(endTime());
     }
 
 }

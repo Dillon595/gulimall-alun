@@ -78,7 +78,7 @@ public class PayWebController {
         PayRequest request = new PayRequest();
         request.setOrderName("4559066-最好的支付sdk");
         request.setOrderId(orderInfo.getOrderSn());
-        request.setOrderAmount(orderInfo.getPayAmount().doubleValue());
+        request.setOrderAmount(0.01);
         request.setPayTypeEnum(WXPAY_NATIVE);
 
         PayResponse payResponse = bestPayService.pay(request);
@@ -91,14 +91,6 @@ public class PayWebController {
         model.addAttribute("returnUrl",wxPayConfig.getReturnUrl());
 
         return "createForWxNative";
-    }
-
-    @PostMapping(value = "/pay/notify")
-    @ResponseBody
-    public String asyncNotify(@RequestBody String notifyData) {
-
-        //异步通知结果
-        return orderService.asyncNotify(notifyData);
     }
 
 

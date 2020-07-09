@@ -17,6 +17,7 @@ import com.xunqi.gulimall.coupon.service.SkuLadderService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -36,9 +37,18 @@ public class SkuFullReductionServiceImpl extends ServiceImpl<SkuFullReductionDao
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
+
+        QueryWrapper<SkuFullReductionEntity> queryWrapper = new QueryWrapper<SkuFullReductionEntity>();
+
+        String key = (String) params.get("key");
+
+        if (!StringUtils.isEmpty(key)) {
+            queryWrapper.eq("id",key).or().eq("sku_id",key);
+        }
+
         IPage<SkuFullReductionEntity> page = this.page(
                 new Query<SkuFullReductionEntity>().getPage(params),
-                new QueryWrapper<SkuFullReductionEntity>()
+                queryWrapper
         );
 
         return new PageUtils(page);

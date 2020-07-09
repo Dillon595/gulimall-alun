@@ -180,7 +180,6 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
 
             //1、如果每一个商品都锁定成功,将当前商品锁定了几件的工作单记录发给MQ
             //2、锁定失败。前面保存的工作单信息都回滚了。发送出去的消息，即使要解锁库存，由于在数据库查不到指定的id，所有就不用解锁
-            //
             for (Long wareId : wareIds) {
                 //锁定成功就返回1，失败就返回0
                 Long count = wareSkuDao.lockSkuStock(skuId,wareId,hasStock.getNum());

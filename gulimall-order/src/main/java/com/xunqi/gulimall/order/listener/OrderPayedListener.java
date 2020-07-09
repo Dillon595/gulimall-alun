@@ -7,6 +7,7 @@ import com.xunqi.gulimall.order.service.OrderService;
 import com.xunqi.gulimall.order.vo.PayAsyncVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,6 +62,12 @@ public class OrderPayedListener {
             System.out.println("签名验证失败...");
             return "error";
         }
+    }
+
+    @PostMapping(value = "/pay/notify")
+    public String asyncNotify(@RequestBody String notifyData) {
+        //异步通知结果
+        return orderService.asyncNotify(notifyData);
     }
 
 }
