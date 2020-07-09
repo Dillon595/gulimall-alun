@@ -28,10 +28,12 @@ public class SeckillScheduled {
     @Autowired
     private SeckillService seckillService;
 
-    @Scheduled(cron = "0 0 3 * * ? ")
+    //TODO 保证幂等性问题
+    @Scheduled(cron = "0 * * * * ? ")
     public void uploadSeckillSkuLatest3Days() {
 
         //1、重复上架无需处理
+        log.info("上架秒杀的商品...");
         seckillService.uploadSeckillSkuLatest3Days();
     }
 

@@ -1,13 +1,7 @@
 package com.xunqi.gulimall.seckill.scheduled;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * @Description:
@@ -49,12 +43,12 @@ public class HelloScheduled {
      *      解决：使用异步任务 + 定时任务来完成定时任务不阻塞的功能
      *
      */
-    @Async
-    @Scheduled(cron = "*/5 * * ? * 4")
-    public void hello() {
-        log.info("hello...");
-        try { TimeUnit.SECONDS.sleep(3); } catch (InterruptedException e) { e.printStackTrace(); }
-
-    }
+    // @Async
+    // @Scheduled(cron = "*/5 * * ? * 4")
+    // public void hello() {
+    //     log.info("hello...");
+    //     try { TimeUnit.SECONDS.sleep(3); } catch (InterruptedException e) { e.printStackTrace(); }
+    //
+    // }
 
 }

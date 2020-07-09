@@ -7,21 +7,27 @@ import com.xunqi.common.utils.PageUtils;
 import com.xunqi.common.utils.Query;
 import com.xunqi.gulimall.coupon.dao.SeckillSessionDao;
 import com.xunqi.gulimall.coupon.entity.SeckillSessionEntity;
+import com.xunqi.gulimall.coupon.entity.SeckillSkuRelationEntity;
 import com.xunqi.gulimall.coupon.service.SeckillSessionService;
+import com.xunqi.gulimall.coupon.service.SeckillSkuRelationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service("seckillSessionService")
 public class SeckillSessionServiceImpl extends ServiceImpl<SeckillSessionDao, SeckillSessionEntity> implements SeckillSessionService {
+
+    @Autowired
+    private SeckillSkuRelationService seckillSkuRelationService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -46,11 +52,21 @@ public class SeckillSessionServiceImpl extends ServiceImpl<SeckillSessionDao, Se
     public List<SeckillSessionEntity> getLates3DaySession() {
 
         //计算最近三天
-        // Date date = new Date();
-        LocalDate now = LocalDate.now();
-        LocalDate plus = now.plus(Duration.ofDays(1));
+        //查出这三天参与秒杀活动的商品
         List<SeckillSessionEntity> list = this.baseMapper.selectList(new QueryWrapper<SeckillSessionEntity>()
                 .between("start_time", startTime(), endTime()));
+
+        if (list != null && list.size() > 0) {
+            List<SeckillSessionEntity> collect = list.stream().map(session -> {
+                Long id = session.getId();
+                //查出sms_seckill_sku_relation表中关联的skuId
+                List<SeckillSkuRelationEntity> relationSkus = seckillSkuRelationService.list(new QueryWrapper<SeckillSkuRelationEntity>()
+                        .eq("promotion_session_id", id));
+                session.setRelationSkus(relationSkus);
+                return session;
+            }).collect(Collectors.toList());
+            return collect;
+        }
 
         return null;
     }
