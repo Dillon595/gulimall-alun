@@ -56,7 +56,8 @@
                         <li><a href="/static/item/javascript:;">海外</a></li>
                     </ol>
                 </li>
-            </ul>`
+            </ul>
+            `
             <ul class="header_ul_right">
                 <li style="border: 0;">
                     <a th:if="${session.loginUser == null}" href="http://auth.gulimall.com/login.html"
@@ -522,8 +523,16 @@
                             <span>￥</span>
                             <span th:text="${#numbers.formatDecimal(item.info.price,3,2)}">4499.00</span>
                         </li>
-                        <li>
-                            预约享资格
+                        <li style="color: red" th:if="${item.seckillSkuVo != null}">
+
+                            <span th:if="${#dates.createNow().getTime() < item.seckillSkuVo.startTime}">
+                                商品将会在[[${#dates.format(new java.util.Date(item.seckillSkuVo.startTime),"yyyy-MM-dd HH:mm:ss")}]]进行秒杀
+                            </span>
+
+                            <span th:if="${#dates.createNow().getTime() >= item.seckillSkuVo.startTime && #dates.createNow().getTime() <= item.seckillSkuVo.endTime}">
+                                秒杀价  [[${#numbers.formatDecimal(item.seckillSkuVo.seckillPrice,1,2)}]]
+                            </span>
+
                         </li>
                         <li>
                             <a href="/static/item/">
@@ -1371,7 +1380,7 @@
     $(".addToCart").click(function () {
         let skuId = $(this).attr("skuId");
         let num = $("#productNum").val();
-        location.href = "http://cart.gulimall.com/addCartItem?skuId="+skuId+"&num="+num;
+        location.href = "http://cart.gulimall.com/addCartItem?skuId=" + skuId + "&num=" + num;
         return false;
     });
 

@@ -39,7 +39,8 @@ public class SeckillScheduled {
     private final String upload_lock = "seckill:upload:lock";
 
     //TODO 保证幂等性问题
-    @Scheduled(cron = "*/5 * * * * ? ")
+    @Scheduled(cron = "*/30 * * * * ? ")
+    // @Scheduled(cron = "0 0/3 * * * ? ")
     public void uploadSeckillSkuLatest3Days() {
 
         //1、重复上架无需处理

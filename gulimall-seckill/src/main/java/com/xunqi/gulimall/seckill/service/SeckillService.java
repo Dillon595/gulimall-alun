@@ -1,5 +1,9 @@
 package com.xunqi.gulimall.seckill.service;
 
+import com.xunqi.gulimall.seckill.to.SeckillSkuRedisTo;
+
+import java.util.List;
+
 /**
  * @Description:
  * @Created: with IntelliJ IDEA.
@@ -13,4 +17,12 @@ public interface SeckillService {
      */
     void uploadSeckillSkuLatest3Days();
 
+    List<SeckillSkuRedisTo> getCurrentSeckillSkus();
+
+    /**
+     * 根据skuId查询商品是否参加秒杀活动
+     * @param skuId
+     * @return
+     */
+    SeckillSkuRedisTo getSkuSeckilInfo(Long skuId);
 }
