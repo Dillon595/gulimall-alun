@@ -50,6 +50,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import static com.xunqi.common.constant.CartConstant.CART_PREFIX;
 import static com.xunqi.gulimall.order.constant.OrderConstant.USER_ORDER_TOKEN_PREFIX;
 
 
@@ -248,7 +249,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
                     rabbitTemplate.convertAndSend("order-event-exchange","order.create.order",order.getOrder());
 
                     //删除购物车里的数据
-                    //redisTemplate.delete(CART_PREFIX+memberResponseVo.getId());
+                    redisTemplate.delete(CART_PREFIX+memberResponseVo.getId());
                     return responseVo;
                 } else {
                     //锁定失败

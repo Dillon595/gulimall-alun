@@ -17,7 +17,6 @@ import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -159,14 +158,13 @@ public class SeckillServiceImpl implements SeckillService {
     public List<SeckillSkuRedisTo> getCurrentSeckillSkus() {
 
         //1、确定当前属于哪个秒杀场次
-        long currentTime = new Date().getTime();
-        // long currentTime = System.currentTimeMillis();
+        long currentTime = System.currentTimeMillis();
 
         //从Redis中查询到所有key以seckill:sessions开头的所有数据
         Set<String> keys = redisTemplate.keys(SESSION__CACHE_PREFIX + "*");
         for (String key : keys) {
             //seckill:sessions:1594396764000_1594453242000
-            String replace = key.replace("seckill:sessions:", "");
+            String replace = key.replace(SESSION__CACHE_PREFIX, "");
             String[] s = replace.split("_");
             //获取存入Redis商品的开始时间
             long startTime = Long.parseLong(s[0]);
