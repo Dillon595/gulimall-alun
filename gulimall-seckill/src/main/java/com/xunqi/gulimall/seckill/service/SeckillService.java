@@ -25,4 +25,13 @@ public interface SeckillService {
      * @return
      */
     SeckillSkuRedisTo getSkuSeckilInfo(Long skuId);
+
+    /**
+     * 当前商品进行秒杀（秒杀开始）
+     * @param killId
+     * @param key
+     * @param num
+     * @return
+     */
+    String kill(String killId, String key, Integer num) throws InterruptedException;
 }

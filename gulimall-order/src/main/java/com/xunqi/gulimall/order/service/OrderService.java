@@ -1,6 +1,7 @@
 package com.xunqi.gulimall.order.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xunqi.common.to.mq.SeckillOrderTo;
 import com.xunqi.common.utils.PageUtils;
 import com.xunqi.gulimall.order.entity.OrderEntity;
 import com.xunqi.gulimall.order.vo.*;
@@ -71,5 +72,12 @@ public interface OrderService extends IService<OrderEntity> {
      * @param notifyData
      */
     String asyncNotify(String notifyData);
+
+
+    /**
+     * 创建秒杀单
+     * @param orderTo
+     */
+    void createSeckillOrder(SeckillOrderTo orderTo);
 }
 

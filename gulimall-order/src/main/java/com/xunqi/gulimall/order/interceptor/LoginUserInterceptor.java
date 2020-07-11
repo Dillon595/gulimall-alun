@@ -8,7 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 
 import static com.xunqi.common.constant.AuthServerConstant.LOGIN_USER;
@@ -36,10 +35,8 @@ public class LoginUserInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        HttpSession session = request.getSession();
-
         //获取登录的用户信息
-        MemberResponseVo attribute = (MemberResponseVo) session.getAttribute(LOGIN_USER);
+        MemberResponseVo attribute = (MemberResponseVo) request.getSession().getAttribute(LOGIN_USER);
 
         if (attribute != null) {
             //把登录后用户的信息放在ThreadLocal里面进行保存

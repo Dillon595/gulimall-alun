@@ -3,6 +3,7 @@ package com.xunqi.gulimall.cart.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.xunqi.common.utils.R;
+import com.xunqi.gulimall.cart.exception.CartExceptionHandler;
 import com.xunqi.gulimall.cart.feign.ProductFeignService;
 import com.xunqi.gulimall.cart.interceptor.CartInterceptor;
 import com.xunqi.gulimall.cart.service.CartService;
@@ -264,6 +265,9 @@ public class CartServiceImpl implements CartService {
             String cartKey = CART_PREFIX + userInfoTo.getUserId();
             //获取所有的
             List<CartItemVo> cartItems = getCartItems(cartKey);
+            if (cartItems == null) {
+                throw new CartExceptionHandler();
+            }
             //筛选出选中的
             cartItemVoList = cartItems.stream()
                     .filter(items -> items.getCheck())

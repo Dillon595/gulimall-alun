@@ -4,10 +4,12 @@ import com.xunqi.common.utils.R;
 import com.xunqi.gulimall.seckill.service.SeckillService;
 import com.xunqi.gulimall.seckill.to.SeckillSkuRedisTo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -18,7 +20,7 @@ import java.util.List;
  * @createTime: 2020-07-10 11:01
  **/
 
-@RestController
+@Controller
 public class SeckillController {
 
 
@@ -30,6 +32,7 @@ public class SeckillController {
      * @return
      */
     @GetMapping(value = "/getCurrentSeckillSkus")
+    @ResponseBody
     public R getCurrentSeckillSkus() {
 
         //获取到当前可以参加秒杀商品的信息
@@ -45,6 +48,7 @@ public class SeckillController {
      * @return
      */
     @GetMapping(value = "/sku/seckill/{skuId}")
+    @ResponseBody
     public R getSkuSeckilInfo(@PathVariable("skuId") Long skuId) {
 
         SeckillSkuRedisTo to = seckillService.getSkuSeckilInfo(skuId);
@@ -53,14 +57,28 @@ public class SeckillController {
     }
 
 
+    /**
+     * 商品进行秒杀(秒杀开始)
+     * @param killId
+     * @param key
+     * @param num
+     * @return
+     */
     @GetMapping(value = "/kill")
-    public R seckill(@RequestParam("killId") String killId,
-                     @RequestParam("key") String key,
-                     @RequestParam("num") Integer num) {
+    public String seckill(@RequestParam("killId") String killId,
+                          @RequestParam("key") String key,
+                          @RequestParam("num") Integer num,
+                          Model model) {
 
-        //1、判断是否登录
-
-        return R.ok();
+        String orderSn = null;
+        try {
+            //1、判断是否登录
+            orderSn = seckillService.kill(killId,key,num);
+            model.addAttribute("orderSn",orderSn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "success";
     }
 
 }

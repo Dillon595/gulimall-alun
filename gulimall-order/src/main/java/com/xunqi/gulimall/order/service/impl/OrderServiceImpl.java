@@ -9,6 +9,7 @@ import com.lly835.bestpay.model.PayResponse;
 import com.lly835.bestpay.service.BestPayService;
 import com.xunqi.common.exception.NoStockException;
 import com.xunqi.common.to.OrderTo;
+import com.xunqi.common.to.mq.SeckillOrderTo;
 import com.xunqi.common.utils.PageUtils;
 import com.xunqi.common.utils.Query;
 import com.xunqi.common.utils.R;
@@ -506,7 +507,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
      * 构建所有订单项数据
      * @return
      */
-    private List<OrderItemEntity> builderOrderItems(String orderSn) {
+    public List<OrderItemEntity> builderOrderItems(String orderSn) {
 
         List<OrderItemEntity> orderItemEntityList = new ArrayList<>();
 
@@ -669,6 +670,46 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
                 "  <return_code><![CDATA[SUCCESS]]></return_code>\n" +
                 "  <return_msg><![CDATA[OK]]></return_msg>\n" +
                 "</xml>";
+    }
+
+
+    /**
+     * 创建秒杀单
+     * @param orderTo
+     */
+    @Override
+    public void createSeckillOrder(SeckillOrderTo orderTo) {
+
+        //TODO 保存订单信息
+        OrderEntity orderEntity = new OrderEntity();
+        orderEntity.setOrderSn(orderTo.getOrderSn());
+        orderEntity.setMemberId(orderTo.getMemberId());
+        orderEntity.setCreateTime(new Date());
+        BigDecimal totalPrice = orderTo.getSeckillPrice().multiply(BigDecimal.valueOf(orderTo.getNum()));
+        orderEntity.setPayAmount(totalPrice);
+        orderEntity.setStatus(OrderStatusEnum.CREATE_NEW.getCode());
+
+        //保存订单
+        this.save(orderEntity);
+
+        //保存订单项信息
+        OrderItemEntity orderItem = new OrderItemEntity();
+        orderItem.setOrderSn(orderTo.getOrderSn());
+        orderItem.setRealAmount(totalPrice);
+
+        orderItem.setSkuQuantity(orderTo.getNum());
+
+        //保存商品的spu信息
+        R spuInfo = productFeignService.getSpuInfoBySkuId(orderTo.getSkuId());
+        SpuInfoVo spuInfoData = spuInfo.getData("data", new TypeReference<SpuInfoVo>() {
+        });
+        orderItem.setSpuId(spuInfoData.getId());
+        orderItem.setSpuName(spuInfoData.getSpuName());
+        orderItem.setSpuBrand(spuInfoData.getBrandName());
+        orderItem.setCategoryId(spuInfoData.getCatalogId());
+
+        //保存订单项数据
+        orderItemService.save(orderItem);
     }
 
 
