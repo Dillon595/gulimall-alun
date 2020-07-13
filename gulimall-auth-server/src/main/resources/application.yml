@@ -22,6 +22,11 @@ spring:
     host: 192.168.77.130
     port: 6379
 
+#开启feign对sentinel的支持
+feign:
+  sentinel:
+    enabled: true
+
 
   thymeleaf:
     cache: false

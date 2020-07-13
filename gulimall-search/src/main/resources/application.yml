@@ -14,12 +14,17 @@ spring:
         #配置sentinel dashboard地址
         dashboard: localhost:8080
 
-  thymeleaf:
-    cache: false
-
   redis:
     host: 192.168.77.130
     port: 6379
+
+#开启feign对sentinel的支持
+feign:
+  sentinel:
+    enabled: true
+
+  thymeleaf:
+    cache: false
 
   session:
     store-type: redis

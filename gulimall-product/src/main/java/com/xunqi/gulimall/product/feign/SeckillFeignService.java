@@ -1,6 +1,7 @@
 package com.xunqi.gulimall.product.feign;
 
 import com.xunqi.common.utils.R;
+import com.xunqi.gulimall.product.fallback.SeckillFeignServiceFallBack;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @createTime: 2020-07-10 15:53
  **/
 
-@FeignClient("gulimall-seckill")
+@FeignClient(value = "gulimall-seckill",fallback = SeckillFeignServiceFallBack.class)
 public interface SeckillFeignService {
 
     /**

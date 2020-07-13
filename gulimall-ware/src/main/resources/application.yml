@@ -1,5 +1,5 @@
 server:
-  port: 11000
+  port: 7000
 
 spring:
   application:
@@ -19,6 +19,11 @@ spring:
       transport:
         #配置sentinel dashboard地址
         dashboard: localhost:8080
+
+#开启feign对sentinel的支持
+feign:
+  sentinel:
+    enabled: true
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
