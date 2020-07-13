@@ -14,6 +14,12 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848
+
+    sentinel:
+      transport:
+        #配置sentinel dashboard地址
+        dashboard: localhost:8080
+
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
 
@@ -29,3 +35,9 @@ logging:
   level:
     com.xunqi.gulimall: debug
 
+#暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

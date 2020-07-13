@@ -15,7 +15,7 @@
         <!--品牌官方网站-->
         <div class="min">
             <ul class="header_ul_left">
-                <li class="glyphicon glyphicon-home"><a href="/static/item/shouye.html" class="aa">京东首页</a></li>
+                <li class="glyphicon glyphicon-home"><a href="http://gulimall.com/" class="aa">京东首页</a></li>
                 <li class="glyphicon glyphicon-map-marker"><a href="/static/item/javascript:;">北京</a>
                     <ol id="beijing">
                         <li style="background: red;"><a href="/static/item/javascript:;" style="color: white;">北京</a>
@@ -68,7 +68,7 @@
                     <a th:if="${session.loginUser == null}" href="http://auth.gulimall.com/reg.html"
                        style="color: red;">免费注册</a>
                 </li>
-                <li><a href="http://order.gulimall.com/list.html" class="aa">我的订单</a> |</li>
+                <li><a href="http://member.gulimall.com/memberOrder.html" class="aa">我的订单</a> |</li>
                 <li class="jingdong"><a href="/static/item/javascript:;">我的京东</a><span
                         class="glyphicon glyphicon-menu-down">|</span>
                     <ol class="jingdong_ol">
@@ -679,12 +679,11 @@
                     </div>
 
                     <div class="box-btns-two"
-                         th:if="${item.seckillSkuVo == null}">
+                         th:if="${item.seckillSkuVo == null }">
                         <a class="addToCart" href="#" th:attr="skuId=${item.info.skuId}">
                             加入购物车
                         </a>
                     </div>
-
 
                     <div class="box-btns-two"
                          th:if="${item.seckillSkuVo != null && (#dates.createNow().getTime() >= item.seckillSkuVo.startTime && #dates.createNow().getTime() <= item.seckillSkuVo.endTime)}">

@@ -1,5 +1,11 @@
 spring:
   cloud:
+
+    sentinel:
+      transport:
+        #配置sentinel dashboard地址
+        dashboard: localhost:8080
+
     gateway:
       routes:
 #        - id: test_route
@@ -95,6 +101,15 @@ spring:
           uri: lb://gulimall-seckill
           predicates:
             - Host=seckill.gulimall.com
+
+
+
+#暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 
   ## 前端项目，/api
 ## http://localhost:88/api/captcha.jpg   http://localhost:8080/renren-fast/captcha.jpg

@@ -1,13 +1,12 @@
 package com.xunqi.gulimall.order.config;
 
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
+import org.springframework.context.annotation.Primary;
 
 /**
  * @Description:
@@ -19,14 +18,22 @@ import javax.annotation.Resource;
 @Configuration
 public class MyRabbitConfig {
 
-    @Resource
     private RabbitTemplate rabbitTemplate;
+
+    @Primary
+    @Bean
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        this.rabbitTemplate = rabbitTemplate;
+        rabbitTemplate.setMessageConverter(messageConverter());
+        initRabbitTemplate();
+        return rabbitTemplate;
+    }
 
     @Bean
     public MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
     }
-
 
     /**
      * 定制RabbitTemplate
@@ -41,7 +48,7 @@ public class MyRabbitConfig {
      * 3、消费端确认(保证每个消息都被正确消费，此时才可以broker删除这个消息)
      *
      */
-    @PostConstruct  //MyRabbitConfig对象创建完成以后，执行这个方法
+    // @PostConstruct  //MyRabbitConfig对象创建完成以后，执行这个方法
     public void initRabbitTemplate() {
 
         /**

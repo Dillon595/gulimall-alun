@@ -11,6 +11,12 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848
+
+    sentinel:
+      transport:
+        #配置sentinel dashboard地址
+        dashboard: localhost:8080
+
   application:
     name: gulimall-member
 
@@ -32,4 +38,10 @@ mybatis-plus:
       id-type: auto
 
 
+#暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 

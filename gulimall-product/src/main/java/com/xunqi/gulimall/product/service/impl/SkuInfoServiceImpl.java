@@ -180,6 +180,13 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
                 SeckillSkuVo seckilInfoData = skuSeckilInfo.getData("data", new TypeReference<SeckillSkuVo>() {
                 });
                 skuItemVo.setSeckillSkuVo(seckilInfoData);
+
+                if (seckilInfoData != null) {
+                    long currentTime = System.currentTimeMillis();
+                    if (currentTime > seckilInfoData.getEndTime()) {
+                        skuItemVo.setSeckillSkuVo(null);
+                    }
+                }
             }
         }, executor);
 
