@@ -42,7 +42,6 @@ public class SeckillScheduled {
     // @Scheduled(cron = "*/5 * * * * ? ")
     @Scheduled(cron = "0 0 1/1 * * ? ")
     public void uploadSeckillSkuLatest3Days() {
-
         //1、重复上架无需处理
         log.info("上架秒杀的商品...");
 
