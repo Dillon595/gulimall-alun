@@ -1,6 +1,5 @@
 package com.xunqi.gulimall.product;
 
-import com.alibaba.cloud.seata.GlobalTransactionAutoConfiguration;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -62,7 +61,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @EnableFeignClients(basePackages = "com.xunqi.gulimall.product.feign")
 @EnableDiscoveryClient
 @MapperScan("com.xunqi.gulimall.product.dao")
-@SpringBootApplication(exclude = GlobalTransactionAutoConfiguration.class)
+@SpringBootApplication //(exclude = GlobalTransactionAutoConfiguration.class)
 public class GulimallProductApplication {
 
     public static void main(String[] args) {

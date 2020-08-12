@@ -32,7 +32,6 @@ feign:
   session:
     store-type: redis
 
-
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
 

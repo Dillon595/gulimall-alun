@@ -1,5 +1,5 @@
 server:
-  port: 20000
+  port: 8150
 
   servlet:
     session:
@@ -33,7 +33,6 @@ feign:
 
   session:
     store-type: redis
-
 
 #暴露所有端点
 management:

@@ -19,7 +19,6 @@
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>com.xunqi.gulimall</groupId>
             <artifactId>gulimall-common</artifactId>

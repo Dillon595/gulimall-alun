@@ -110,7 +110,6 @@ public class SeckillServiceImpl implements SeckillService {
                         .map(item -> item.getPromotionSessionId() + "-" + item.getSkuId().toString()).collect(Collectors.toList());
                 redisTemplate.opsForList().leftPushAll(key,skuIds);
             }
-
         });
 
     }

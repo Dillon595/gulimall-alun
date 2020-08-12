@@ -9,7 +9,7 @@ spring:
         path: /sms/
         skin: 1
         sign: 175622
-        appcode: b14f674581e4411c990e18bdfcfc35d6
+        appcode: b0563c23aff8428c97a54d4f7f9e28e5
 
 
   application:

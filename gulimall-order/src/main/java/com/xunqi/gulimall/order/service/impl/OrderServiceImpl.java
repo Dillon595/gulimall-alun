@@ -394,7 +394,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         OrderCreateTo createTo = new OrderCreateTo();
 
         //1、生成订单号
-        String orderSn = IdWorker.getTimeId().substring(0,16);
+        String orderSn = IdWorker.getTimeId();
         OrderEntity orderEntity = builderOrder(orderSn);
 
         //2、获取到所有的订单项

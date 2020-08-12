@@ -102,7 +102,6 @@ public class LoginController {
             return "redirect:http://auth.gulimall.com/reg.html";
         }
 
-
         //1、效验验证码
         String code = vos.getCode();
 

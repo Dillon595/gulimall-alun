@@ -41,7 +41,7 @@ public class OrderController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("order:order:list")
-    public R list(@RequestBody Map<String, Object> params){
+    public R list(Map<String, Object> params){
 
         PageUtils page = orderService.queryPage(params);
 
