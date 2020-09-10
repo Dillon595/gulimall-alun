@@ -46,12 +46,12 @@ public class OAuth2Controller {
         map.put("redirect_uri","http://auth.gulimall.com/oauth2.0/weibo/success");
         map.put("code",code);
 
-        //1、根据code换取access_token
+        //1、根据用户授权返回的code换取access_token
         HttpResponse response = HttpUtils.doPost("https://api.weibo.com", "/oauth2/access_token", "post", new HashMap<>(), map, new HashMap<>());
 
         //2、处理
         if (response.getStatusLine().getStatusCode() == 200) {
-            //获取到了access_token
+            //获取到了access_token,转为通用社交登录对象
             String json = EntityUtils.toString(response.getEntity());
             //String json = JSON.toJSONString(response.getEntity());
             SocialUser socialUser = JSON.parseObject(json, SocialUser.class);
