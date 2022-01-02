@@ -6,8 +6,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * @Description:
  * @Created: with IntelliJ IDEA.
- * @author: 夏沫止水
- * @createTime: 2020-06-23 20:28
+ * @author: 阿伦啊
+ * @createTime: 2021-06-23 20:28
  **/
 
 @ConfigurationProperties(prefix = "gulimall.thread")

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 /**
  * @Description:
  * @Created: with IntelliJ IDEA.
- * @author: 夏沫止水
- * @createTime: 2020-06-01 08:41
+ * @author: 阿伦啊
+ * @createTime: 2021-06-01 08:41
  **/
 
 @FeignClient("gulimall-coupon")

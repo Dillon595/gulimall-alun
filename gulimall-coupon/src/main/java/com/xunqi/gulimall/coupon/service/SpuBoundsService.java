@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * 商品spu积分设置
  *
- * @author 夏沫止水
+ * @author 阿伦啊
  * @email HeJieLin@gulimall.com
  * @date 2020-05-22 19:35:30
  */

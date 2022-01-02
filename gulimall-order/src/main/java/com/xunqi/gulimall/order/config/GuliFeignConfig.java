@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @Description: feign拦截器功能
  * @Created: with IntelliJ IDEA.
- * @author: 夏沫止水
- * @createTime: 2020-07-02 21:10
+ * @author: 阿伦啊
+ * @createTime: 2021-07-02 21:10
  **/
 
 @Configuration

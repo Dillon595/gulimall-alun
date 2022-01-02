@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 /**
  * 品牌分类关联
  *
- * @author 夏沫止水
+ * @author 阿伦啊
  * @email HeJieLin@gulimall.com
  * @date 2020-05-22 19:00:18
  */

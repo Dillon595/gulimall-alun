@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 /**
  * 商品会员价格
  * 
- * @author 夏沫止水
+ * @author 阿伦啊
  * @email HeJieLin@gulimall.com
  * @date 2020-05-22 19:35:30
  */

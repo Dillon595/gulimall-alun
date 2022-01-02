@@ -7,8 +7,8 @@ import java.util.List;
 /**
  * @Description: 锁定库存的vo
  * @Created: with IntelliJ IDEA.
- * @author: 夏沫止水
- * @createTime: 2020-07-05 10:52
+ * @author: 阿伦啊
+ * @createTime: 2021-07-05 10:52
  **/
 
 @Data

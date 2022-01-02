@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * 会员登录记录
  *
- * @author 夏沫止水
+ * @author 阿伦啊
  * @email HeJieLin@gulimall.com
  * @date 2020-05-22 19:42:06
  */

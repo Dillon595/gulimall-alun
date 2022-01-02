@@ -24,8 +24,8 @@ import static com.xunqi.common.constant.AuthServerConstant.LOGIN_USER;
 /**
  * @Description: 处理社交登录请求
  * @Created: with IntelliJ IDEA.
- * @author: 夏沫止水
- * @createTime: 2020-06-28 10:16
+ * @author: 阿伦啊
+ * @createTime: 2021-06-28 10:16
  **/
 
 @Slf4j

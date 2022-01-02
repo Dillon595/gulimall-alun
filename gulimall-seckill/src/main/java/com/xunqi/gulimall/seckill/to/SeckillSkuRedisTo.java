@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 /**
  * @Description: 给Redis中存放的skuInfo的信息
  * @Created: with IntelliJ IDEA.
- * @author: 夏沫止水
- * @createTime: 2020-07-09 21:39
+ * @author: 阿伦啊
+ * @createTime: 2021-07-09 21:39
  **/
 
 @Data

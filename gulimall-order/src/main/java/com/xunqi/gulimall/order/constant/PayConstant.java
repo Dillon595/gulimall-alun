@@ -3,8 +3,8 @@ package com.xunqi.gulimall.order.constant;
 /**
  * @Description:
  * @Created: with IntelliJ IDEA.
- * @author: 夏沫止水
- * @createTime: 2020-07-08 23:35
+ * @author: 阿伦啊
+ * @createTime: 2021-07-08 23:35
  **/
 public class PayConstant {
 

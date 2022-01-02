@@ -13,8 +13,8 @@ import java.util.List;
 /**
  * @Description:
  * @Created: with IntelliJ IDEA.
- * @author: 夏沫止水
- * @createTime: 2020-07-03 16:46
+ * @author: 阿伦啊
+ * @createTime: 2021-07-03 16:46
  **/
 
 @FeignClient("gulimall-ware")

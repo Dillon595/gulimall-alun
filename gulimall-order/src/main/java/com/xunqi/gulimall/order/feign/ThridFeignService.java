@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 /**
  * @Description:
  * @Created: with IntelliJ IDEA.
- * @author: 夏沫止水
- * @createTime: 2020-07-08 21:14
+ * @author: 阿伦啊
+ * @createTime: 2021-07-08 21:14
  **/
 
 @FeignClient("gulimall-third-party")

@@ -7,8 +7,8 @@ import java.util.List;
 /**
  * @Description: 封装页面所有可能传递过来的查询条件
  * @Created: with IntelliJ IDEA.
- * @author: 夏沫止水
- * @createTime: 2020-06-13 14:17
+ * @author: 阿伦啊
+ * @createTime: 2021-06-13 14:17
  **/
 
 @Data

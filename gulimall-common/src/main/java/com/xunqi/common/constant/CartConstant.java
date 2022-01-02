@@ -3,8 +3,8 @@ package com.xunqi.common.constant;
 /**
  * @Description: 购物车常量
  * @Created: with IntelliJ IDEA.
- * @author: 夏沫止水
- * @createTime: 2020-06-30 17:39
+ * @author: 阿伦啊
+ * @createTime: 2021-06-30 17:39
  **/
 public class CartConstant {
 

@@ -8,8 +8,8 @@ import java.util.List;
 /**
  * @Description: 整个购物车存放的商品信息   需要计算的属性需要重写get方法，保证每次获取属性都会进行计算
  * @Created: with IntelliJ IDEA.
- * @author: 夏沫止水
- * @createTime: 2020-06-30 16:42
+ * @author: 阿伦啊
+ * @createTime: 2021-06-30 16:42
  **/
 
 public class CartVo {

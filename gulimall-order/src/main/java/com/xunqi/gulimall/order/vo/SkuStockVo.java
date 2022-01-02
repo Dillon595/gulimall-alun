@@ -5,8 +5,8 @@ import lombok.Data;
 /**
  * @Description: 库存vo
  * @Created: with IntelliJ IDEA.
- * @author: 夏沫止水
- * @createTime: 2020-07-03 18:13
+ * @author: 阿伦啊
+ * @createTime: 2021-07-03 18:13
  **/
 
 @Data

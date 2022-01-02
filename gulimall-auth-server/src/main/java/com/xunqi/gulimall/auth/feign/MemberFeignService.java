@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * @Description:
  * @Created: with IntelliJ IDEA.
- * @author: 夏沫止水
- * @createTime: 2020-06-27 17:10
+ * @author: 阿伦啊
+ * @createTime: 2021-06-27 17:10
  **/
 
 @FeignClient("gulimall-member")

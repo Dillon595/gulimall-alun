@@ -13,8 +13,8 @@ import java.util.Map;
 /**
  * @Description:
  * @Created: with IntelliJ IDEA.
- * @author: 夏沫止水
- * @createTime: 2020-06-27 09:39
+ * @author: 阿伦啊
+ * @createTime: 2021-06-27 09:39
  **/
 
 @ConfigurationProperties(prefix = "spring.cloud.alicloud.sms")

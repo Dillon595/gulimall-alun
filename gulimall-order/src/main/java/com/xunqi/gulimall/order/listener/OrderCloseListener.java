@@ -14,8 +14,8 @@ import java.io.IOException;
 /**
  * @Description: 定时关闭订单
  * @Created: with IntelliJ IDEA.
- * @author: 夏沫止水
- * @createTime: 2020-07-07 09:54
+ * @author: 阿伦啊
+ * @createTime: 2021-07-07 09:54
  **/
 
 @RabbitListener(queues = "order.release.order.queue")

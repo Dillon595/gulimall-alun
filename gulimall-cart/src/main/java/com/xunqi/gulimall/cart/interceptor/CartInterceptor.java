@@ -19,8 +19,8 @@ import static com.xunqi.common.constant.CartConstant.TEMP_USER_COOKIE_TIMEOUT;
 /**
  * @Description: 在执行目标方法之前，判断用户的登录状态.并封装传递给controller目标请求
  * @Created: with IntelliJ IDEA.
- * @author: 夏沫止水
- * @createTime: 2020-06-30 17:31
+ * @author: 阿伦啊
+ * @createTime: 2021-06-30 17:31
  **/
 
 public class CartInterceptor implements HandlerInterceptor {

@@ -10,7 +10,7 @@ import lombok.Data;
 /**
  * 库存工作单
  * 
- * @author 夏沫止水
+ * @author 阿伦啊
  * @email HeJieLin@gulimall.com
  * @date 2020-05-22 19:55:33
  */

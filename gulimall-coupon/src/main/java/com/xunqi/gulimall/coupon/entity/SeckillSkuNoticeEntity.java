@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * 秒杀商品通知订阅
  * 
- * @author 夏沫止水
+ * @author 阿伦啊
  * @email HeJieLin@gulimall.com
  * @date 2020-05-22 19:35:30
  */
